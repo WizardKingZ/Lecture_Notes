@@ -1,0 +1,618 @@
+\documentclass[11pt, a4paper, oneside]{article}
+\usepackage{geometry}               % See geometry.pdf to learn the layout options. There are lots
+\geometry{left=1.9cm, top=1.9cm, right=1.9cm, bottom=1.9cm, footskip=0.5cm}
+%\geometry{landscape}               % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}   % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb} 
+\usepackage{epstopdf}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{paralist}
+
+\usepackage{tikz}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\newtheorem{mydef}{Definition}
+\theoremstyle{definition}
+
+\newtheorem{myprop}{Proposition}
+\theoremstyle{proposition} 
+
+\newtheorem{mycor}{Corollary}
+\theoremstyle{corollary} 
+
+\newtheorem{myl}{Lemma}
+\theoremstyle{lemma}
+
+\newtheorem{myt}{Theorem} 
+\theoremstyle{theorem} 
+
+\title{Microeconomics Theory}
+\author{Johnew Zhang}
+
+\begin{document} 
+
+% provides formulas for life contingencies 
+\def\angl#1{{% 
+\vbox{\hrule height .2pt 
+\kern 1pt 
+\hbox{$\scriptstyle {#1}\kern 1pt$}% 
+}\kern-.05pt \vrule width .2pt 
+}} 
+
+\def\tcelife#1{{\buildrel \circ \over e}_{#1}}
+
+\maketitle
+
+\hline
+
+\tableofcontents
+\addcontentsline 
+
+\newpage
+
+\section*{Background}
+The first section is about making rational decisions, notion of uncertainty and probability density functions. There will be assignments, a midterm and a final (Please find the weight of each component on the syllabus). 
+
+\section{Choice Under Constraint}
+\input{section/section1.tex}
+
+\section{Preference \& Demand Aggregation}
+\input{section/section2.tex}
+
+\section{Choice Theory}
+Lottery, $\mathcal{L}$, is a list of outcomes $1, \cdots, N$ with probabilities $p_i, \cdots, p_n, \sum_n p_n = 1, p_n \geq 0, \forall n$. (Von Neumann\&Morgenstein and Savage view). This is a simple lottery. 
+
+K simple lotteries $L_k = (p_1^k, \cdots, p_n^k)$. Choose lottery $K$ with probability $a_k$, $0\leq a_k \leq 1, \sum_k a_k = 1$. This is a compound lottery. Reducing compound to simple lottery. 
+
+Probability of outcome j is $\sum_{i=1}^K a_ip_j^i$
+
+Preference relation $\succeq$ on space of simple lotteries is continuous if for any $l, l'$ and $l'' \in L$ the sets $\{\alpha \in \{0, 1\}: al+(1-a)l'\succeq l''\}$ and $a \in[0, 1]: l''\succeq al + (1-a)l'\}$ are closed. 
+
+Independence: For all $l, l', l'' \in L$, $l \succeq l' \iff \alpha f +(1 -\alpha)l'' \succeq \alpha l' + (1-\alpha)l'', \forall l'', \forall \alpha \in [0, 1]$. If $l \sim l' \iff \alpha l + (1 - \alpha) l'' \sim \alpha l' + (1- \alpha)l''$. 
+
+Before we start our discussion, we assume that our lotteries follow the conditions below
+\begin{itemize}
+\item Continuity: consider $l, l', l''$, $l \succeq l' \succeq l''$ Then continuity if $\exists \alpha$ such that $\alpha l + (1-\alpha)l'' \sim l', 0\leq \alpha \leq 1$. 
+Consider the following example, $l \succ l' \iff \text{either } l_1 \succ l'_1 \text{ or } l_1 = l'_1 \& l_2\succ l_2'$. It is similar to the lexical-graphical order. 
+\item Independence (transitive; complete): the independence condition implies that indifferent curves are parallel straight lines. 
+\begin{proof}
+Indifference curve is a straight line if $l_1\sim l_2 \implies \alpha l_1 + (1- \alpha) l_2 \sim l_1 \sim l_2, \alpha \in [0, 1]$. 
+
+Assume it is not true, $0.5l_1 + 0.5l_2 \succ l_2$. Then $0.5l_1+0.5l_2 \succ 0.5l_2+0.5l_2$. We know that $l_1 \sim l_2$. From the independence, we have
+$$0.5l_1+0.5l'' \sim 0.5l_2 + 0.5l''$$ Let's $l'' =l_2$. Then $0.5 l_1+0.5l_2 \sim 0.5l_2 +0.5l_2$. This is a contradiction.
+\end{proof}
+\end{itemize} 
+
+\begin{mydef}
+Utility has expected utility form if $\exists$ a set of numbers $u_1, \cdots, u_N$ assigned to the $N$ outcomes such that $$U(l) = \sum_n u_n p_n$$
+\end{mydef}
+
+$l^n$ degenerate lottery if it yields outcome $n$ probability 1.
+
+\begin{myprop}
+Utility $U: L \to \mathbb{R}$ has expected utility form if and only if
+$$U\left(\sum_{i=1}^k\alpha_k l_k\right) = \sum_{i=1}^k\alpha_k U(l^k)$$
+
+In other words, the utility of a compound lottery is the expectation of a set of simple lotteries. 
+\end{myprop}
+
+\begin{proof}
+Suppose $U$ has linearity property
+$$l = (p_1, \cdots, p_n) \text{ as } l = \sum_n p_nl^n$$ 
+$$U(l) = U(\sum_n p_nl^n) = \sum_n p_nU(l^n) = \sum_n p_n U_n$$
+Now suppose $U$ is an expected utility. Compound lottery $(l_1, \cdots, l_k: a_1, \cdots, a_k)$. Probability of outcome $$n = a_1 p^1_1 + a_2p_n^2+ \cdots = \sum_ka_k p_n^k = p_n$$
+$$U(\sum_k a_k l_k) = \sum_n U_n\left[\sum_n a_kp_n^k\right]  = \sum_k a_k U(l_k)$$
+\end{proof}
+
+\begin{myprop}
+Suppose $U: L \to \mathbb{R}$ is an expected utility function for preference relation $\succeq$ on $L$. Then $\hat{U}: L \to \mathbb{R}$ is an alternative such that if and if $\exists$ scalar $\beta > 0, \gamma$ such that
+$$\hat{U}(l) = \beta U(l) + \gamma$$
+\end{myprop}
+
+\begin{proof}
+Choose 2 lotteries $\bar{l}, \underline{l}$ such that $\bar{l} \succeq l \succeq \underline{l}, \forall l \in L$. Suppose $U$ is an expected utility function and $\hat{U} = \beta U + \gamma$. 
+$$\hat{U}\left(\sum_k a_k l_k\right) = \beta U\left(\sum_k a_k l_k\right) + \gamma = \beta\left[\sum_k a_k U(l_k)\right] + \gamma=\sum_k a_k\left[\beta U(l_k)+\gamma\right] = \sum_k a_k \hat{U}(l_k)$$ 
+Show that $\hat{U}, U$ are the expected utilities, then $\hat{U}$ is a affine transformation of $U$. 
+$$U(l) = \lambda_l U(\bar{l}) +(1- \lambda_l)U(\underline{l})=U(\lambda_l\bar{l} + (1-\lambda_l)\underline{l})$$ 
+Therefore, we get
+$$\lambda_l = \frac{U(l)-U(\underline{l})}{U(\bar{l}) - U(\underline{l})}$$
+Since 
+$$\lambda_lU(\bar{l}) + (1- \lambda_l)U(\underline{l}) = U(\lambda_l\bar{l} + (1-\lambda_l)\underline{l})$$
+$$\implies l \sim \lambda_l \bar{l} +(1- \lambda_l)\underline{l}$$
+Hence
+$$\hat{U}(l) = \hat{U}(\lambda_l \bar{l} + (1-\lambda_l)\underline{l}) = \lambda_l \hat{U}(\bar{l}) + (1- \lambda_l)\hat{U}(\underline{l}) = \lambda_l[\hat{U}(\bar{l}) - \hat{U}(\underline{l}) + \hat{U}(l)]$$
+$$\hat{U}(l) = \beta U(l) + \gamma$$ where $\beta =  \frac{\hat{U}(l)-\hat{U}(\underline{l})}{U(\bar{l}) - U(\underline{l})}$ and $\gamma = \hat{U}(\underline{l}) - \beta U(\underline{l})$
+\end{proof}
+
+Let's define $U(l) = \sum_n p_nU_n$. Then we know 
+$$U(l_1) - U(l_2) > U(l_3) - U(l_4)$$
+$\hat{U}$ is an alternative utility represent the same preferences
+$$\exists B >0, \gamma, \text{s.t.} \hat{U}(l). =B U(l') +\gamma$$
+Therefore, 
+$$\hat{U}(l_1) - \hat{U}(l_2) =B U(l_1) +\gamma - BU(l_2) - \gamma = B(U(l_1) - U(l_2))$$
+$$\hat{U}(l_3) - \hat{U}(l_4) = B(U(l_3) - U(l_4))$$
+
+\begin{myprop}
+Suppose $\succeq$ on L is rational continuous and satisfies independence. Then it admits representation in the expected utility form. 
+\end{myprop}
+
+However, in some experiments, we observe the inconsistency between people's choices and mainly, the discrepancy is derived from the ambiguity of the choices presented. 
+
+\subsection{Risk Aversion}
+Lotteries over money, i.e.over $\mathbb{R}^1$. The probability of any outcome is defined by density function $f(t)$, $t\in[0, \infty]$ without loss of generality. There is a cumulative density function $F(x) = \int_0^x f(t)dt$. We say $\int_x^{x+\Delta x} f(t) dt$ is the probability an outcome happens between $x$, $x+\Delta x$. 
+
+Let's define $u(x)$ be utility of outcome $X$ increasing as $x$ increases. Now the expected utility is now defined as the following
+$$U(F) = \int u(x)dF(x) = \int u(x)f(x)dx$$ where $f(x)$ is linear in probability and $u(x)$ is not necessarily linear. In addition, it is used to be called VN-M utility. 
+
+\subsubsection{St. Petersburg Paradox}
+Argument about why $U(x)$ is bounded above. Assume $U(x)$ unbounded. $x_m$ be such that $U(x_m) > 2^m$. Consider the following lottery: toss coin repeatedly till it comes up heads. When it comes up heads on the $m$th toss you win $x_m$. Then the expected winning is 
+$$\sum_m u(x_m) \frac{1}{2}^m > \sum_m 2^m  \frac{1}{2}^m > \infty$$
+This paradox can be found in Friedman and Savage.
+
+\subsubsection{Risk Aversion Factor}
+
+Risk averses if any lottery $F()$ the degenerate lottery yielding expected outcome $\int xdF(x)$ with certainty is at least as good as $F()$. In addition, certainty equivalent of lottery $F()$ written $C(U, F)$ is amount of money with certainty that person regards as equivalent to $F()$. 
+
+Certainty equivalent $C$ of $F$ is defined as 
+$$U(C) = \int u(x)dF(x)$$
+
+The followings are equivalent
+\begin{itemize}
+\item Decision-maker is risk averse
+\item $U()$ is concave
+\item $C(U, F) \leq \int x dF(x), \forall F$. 
+\end{itemize}
+
+Define Arrow-Prutt coefficient of absolute risk aversion
+$$\text{(IAA) }r_A(x) = \frac{-u''(x)}{u'(x)}>0$$
+
+\subsubsection{Insurance}
+
+Suppose the initial wealth is $W$ and a person can lose amount $\$D$ with probability $\pi$. Units of insurance costs $\$q$ and pays $\$1$ if loss occurs. Assume a units of insurance purchase. There are two possible outcomes
+\begin{enumerate}
+\item No loss: wealth is $(W-qa)(1-\pi)$. 
+\item If there is a loss: wealth is $(W-D-qa+a)\pi$. 
+\end{enumerate}
+
+$$E[U] = u(W-qa)(1-\pi) +u(W-D-qa+a)\pi$$
+Then by FOC, we get $$\frac{\partial E[U]}{\partial a} = -(1- \pi)qu'(W-qa)+\pi(1-q) u'(W-D-qa+a)\leq 0$$
+
+Suppose $a\geq 0$. Assume $q = \pi$, then this insurance is actuarially fair. Therefore,
+$$-u'(W-qa) + u'(W-D-qa + a) \leq 0$$
+
+Suppose $a =0$, then $-u'(W) +u'(W-D) \leq 0$. Therefore, we know that $u'(W-D) - u'(W) \leq 0$. However, this is impossible. 
+
+Therefore, $a> 0$, then we get $u'(W-qa) = u'(W- D-qa+a)$. Therefore, $a = D$. This is what we call full insurance. 
+
+\subsubsection{Investing in Risky Asset}
+Two assets safe returns 1/\$ invested. Risky asset return $Z/\$$ invested where $Z$ is a random variable distributed as $F(Z)$ such that $\int zdF(z) > 1$. How much of risky assets to buy? Suppose $a$ is the risky asset purchased and $b$ is the safe asset. We know $a+b = W$ (wealth). The overall problem is 
+$$\max_{a, b}\int u(az+b)dF(z)$$
+$$\text{s.t. } a + b = W$$
+Hence we can solve this by replacing $b$ with $W- a$ 
+$$\max_{a} \int u(a(z-1) + w ) dF(z)$$
+That is
+$$\frac{\partial  \int u(a(z-1) + w ) dF(z)}{\partial a} = \int u'(w+a(z-1))(z-1)dF(z) \leq 0$$ 
+Here if $a < W$, then $\leq 0$; else $\geq 0$ if $a > 0$. 
+
+Suppose $a=0$, then the above FOC becomes $u'(W)\int (z-1) dF(z)$ but $\int (z-1) dF(z) > 0$. Therefore, it is impossible. 
+
+\subsubsection{Absolute Risk Aversion}
+
+\begin{myprop}
+The followings are equivalent:
+\begin{enumerate}[(1)]
+\item $\Gamma_A(x, u_2) \geq \Gamma_A(x, u_1), \forall x$. 
+\item $\exists$ increasing concave function $\psi(\cdot)$, such that $u_2(x) = \psi(u_1(x))$
+\item $c(F, u_2) \leq c(F, u_1), \forall F$. 
+\end{enumerate}
+\end{myprop}
+
+\begin{proof}
+\begin{description}
+\item[$(1)\iff(2)$] $\exists \psi, \psi(u, (x)) = u_2(x)$. Differentiate both side 
+$$\psi'u_1'(x) = u_2'(x)$$
+Differentiate again
+$$\frac{\psi''(u_1')^2}{\psi'u_1'}  +\frac{\psi'u_1''}{\psi'u_1'} = \frac{u_2''}{u_2'} \implies -\frac{u_2''}{u_2'} = -\frac{u_1''}{u_1'} - \frac{\psi''u_1'}{\psi}$$
+Hence
+$$\Gamma_A(2) = \Gamma_A(1) - \frac{\psi''u'_1}{\psi'} \geq  \Gamma_A(1), \forall \psi$$
+\end{description}
+\end{proof}
+
+Consider two assets, one risky and one safe. For the safe asset, it costs $b$ and returns 1. The risky asset costs $a$ and returns $z$ with expectation $\int zdF(z) > 1$. 
+
+For individual i, she is solving the following
+$$\max_{a_i, b_i}\int u_i(a_iz+b_i)dF(z)$$
+Then the first order condition, we have $$\phi_i(a_i) = \int u_i'(w_i+a_i(z-1))(z-1)dF(z) = 0$$
+
+We want to prove: assume 2 is more risk averse than 1, i.e. $a_2 < a_1$ or $\phi_2(a_1) < 0$. Note that, $u'_i(w_i+a_i(z-1))$ is decreasing in $a$. 
+
+Since 2 is more risk averse than 1, then there exists a increasing concave function $\theta$ such that $\theta(u_1(x)) = u_2(x)$. 
+\begin{align*}
+\phi_2(a_2) &= \int u_2'(w+a_2(z-1))(z-1)dF(z) = 0 \\
+\phi_1(a_1) &= \int u_1'(w+a_1(z-1))(z-1)dF(z) = 0 \\
+\phi_2(a_1) &=\int \theta'(u_1(w+a(z-1)))u_1'(w+a_1(z-1))(z-1)dF(z)  < \max(\theta') \phi_1(a_1) =0\\
+\end{align*}
+
+\subsubsection{Relative Risk Aversion}
+Relative risk aversion is $-\frac{xu''(x)}{u'(x)}$. Constant relative risk aversion is $u(x) = \log(x)$. Another one is called iso-elastic utility,
+\[
+u(x) =\left[\frac{x^{1-\eta}}{1-\eta}\right]
+\]
+
+\subsection{Mean-Variance Analysis of Risks}
+Assume $y$ random variable with mean $y^*$ and distributed as $F(y)$. The expected utility is $\int u(y)dF(y) = EU$.
+
+Define $x$ (i.e. cost of risk bearing) as follows
+\begin{enumerate}[(i)]
+\item $u(y^*-x) = EU = \int u(y)dF(y)$
+\item $u(y^* - x) - u(y^*) = \int [u(y) - u(y^*)]dF(y) = \int\left[u'(y^*)(y-y^*)+\frac{u''(y^*)}{2}(y-y^*)^2\right]dF(y)=\frac{u''(y^*)}{2}Var(y)$. 
+\item (ii) is equivalent to $-u'(y^*)x = \frac{u''(y^*)}{2}\sigma^2$. Hence $x = \left[-\frac{u''(y^*)}{u'(y^*)}\right]\frac{\sigma^2}{2}$
+\item $EU = \int u(y)dF(y) =u(y^*-x) = u(y^*) + \frac{1}{2}u''(y^*)\sigma^2$. That is $EU = G(y^*, \sigma^2)$. Use the implicit function theorem to get slopes of the indifference curve in $y^* \to \sigma^2$ plane. 
+\begin{align*}
+\frac{\partial y^*}{\partial \sigma} &= -\frac{u''\sigma}{u'+0.5 \sigma^2 y^* u'''} \approx -\frac{u''\sigma}{u'} &&\text{Assume $u'''\approx 0$} \\
+\end{align*}
+\end{enumerate}
+
+\subsection{Stochastic Dominance}
+\subsubsection{First Order Stochastic Dominance}
+If every person who maximize $E[\mu]$ with $\mu'(x) > 0$ prefers $F$ to $G$, i.e.
+$$\int \mu(x) dF(x)\geq \int \mu(x)dG(x)$$
+
+\begin{myprop}
+Distribution F is first order stochastic dominant over $G$ if and only if
+$$F(x) \leq G(x)$$
+\end{myprop} 
+\begin{proof}
+$F(x) \leq G(x) \implies F \text{ FOSD } G$. Then
+$$A = \int_a^b \mu(x) dF(x) = \int_a^b \mu(x)f(x) = \left.[\mu(x) F(x)\right|_a^b - \int_a^b \mu'(x)F(x)d(x) = \mu(b) - \int_a^b \mu'(x)F(x)d(x)$$
+$$B = \int_a^b \mu(x)dG(x) = \mu(b) - \int_a^b \mu'(x)G(x)dx$$
+$$A- B = \int_a^b \mu'(x)(G(x)-F(x)dx \geq 0$$
+because $\mu(x)'\geq 0$ and $F(x) \leq G(x)$. Thus F is FOSD over G. 
+
+On the other hand, suppose $\exists x^*: F(x^*) > G(x^*)$. Then $A- B < 0$ for an interval around $x^*$ and $\mu'(x)\geq 0$ such that $\mu'$ takes very large values in that interval and small elsewhere. This implies G FOSD F so contradiction.
+\end{proof}
+
+\subsubsection{Second Order Stochastic Dominance}
+Now we compare $F, G$ with the same mean. Comparison with concave $\mu$. F is second order stochastic dominant over $G$ (F less risky than than G if $\int \mu(x) dF(x) \geq \int \mu(x) dG(x)$ for all $\mu$ with $\mu'> 0$ and $\mu''<0$ where $\mu:\mathbb{R}_+^N \to\mathbb{R}_+^N$  
+
+Alternative approach is mean preserving spread. G is a MPS of distribution $F$ if $G$ is the reduction of a compound lottery made up of the distribution $F$ with an additive lottery so that when $F$ selects the final outcome is $x+z$, where $E[z] = 0$. 
+
+\begin{myprop}
+Consider $F, G$ with same mean. The following are equivalent:
+\begin{enumerate}
+\item F SOSD G
+\item G is a MPS of F
+\item $\int_0^x G(t) dt \geq \int_0^x F(t) dt$
+\end{enumerate}
+
+\end{myprop}
+
+\subsection{Geometric Approach to Insurance}
+\begin{itemize}
+\item Initial endowment: $z_1$
+\item $P[state1] = P_1$
+\item $P[state2] = P_2$
+\item Expected unity at $z_1$ is $\mu(z_{11})P_1 + \mu(z_{12}) P_2$
+\item Indifference curve is $\mu(z_{11})P_1 + \mu(z_{12}) P_2=k$
+\item Slope is $-\frac{\mu'(z_{11})P_1}{\mu'(z_{12})P_1}$
+\item On the 45 degree line: slope is $-P_1/P_2$. 
+\item Consider the move $z_1 \to z_2$. You are selling $z_{11} - z_{01}$ and buying $z_{22} - z_{12}$
+\item Expected value of trans is $-P_1(z_{11}- z_{01}) + P_2(z_{22} - z_{12})$
+\item Expected value is 0 when zero cost transaction.
+$$\frac{P_1}{P_2} = \frac{z_{22} - z_{12}}{z_{11}- z_{01}} $$
+Hence you afford to move to point $z_2$ and as a risk aversion investor you prefer $z_2$ than $z_1$. You always wants more. 
+\end{itemize}
+
+\section{Subjective Probabilities}
+de Finetti defined subjective probabilities. He used a more economist point of view. Here in this course, we will use Savage's view. 
+
+\subsection{Savage Framework}
+Set of states $S$. $s\in S$ is specific state. States are uncertain once know state, no remaining uncertainty. Set of outcomes $X$, $x\in X$ on outcome. Outcome is what affects your well-being. Acts (policies, state, governments) $F$, $f\in F$ is an act (policy). A choice of policy is $f: S \to X$. $f$ tells us what outcome $x$ is associated with my states. $x = f(s)$. $f, g $ are two policies $A\subset S$ is called an event. Then
+$$f_A^g(s) = \begin{cases}
+g(s) & s \in A\\
+f(s) & s \notin A\text{ i.e. } S \in A^c
+\end{cases}$$
+
+\subsection{Savage's Axiom}
+\begin{enumerate}[(1)]
+\item Preferences are a complete transitive relation on $F$. 
+\item \textbf{Savage Sure Thing Principle}: A is an event, $A^c$ its complement, $f(s) = g(s), \forall s \in A^c$. $f(s) \neq g(s)$ some states in A. Introduce $f'(s)$, $g'(s)$ such that $f'(s) = g'(s), \forall s \in A^c$. $f'(s) = f(s) + g'(s) = g(s), \forall s \in A$. $f'(s) \neq f(s), s \in A^c$ and $g'(s) \neq g(s), s \in A^c$. Therefore, $f \geq g \iff f' \geq g'$.
+\item Let $f_A^x$ be policy that produces outcome $x$ for any $s\in A, f_A^x(s) = x, \forall s \in A$.  For every $f \in F$, every $A\subset S$, $x, y \in X$ such that
+$$x\geq y \iff f_A^x \geq f_A^y$$
+\item For every $A, B \subset S$, every $x, y, z, w$ with $x \geq y$, $z \geq w$. 
+$$y_A^x \geq y_B^x \iff w_A^2 \geq w_B^2$$
+\item $\exists, f, g$ such that $f > g$. 
+\item Continuity: for any acts $f(S) > g(S)$ and outcome $x$, $\exists$ a finite set of events $\{A_i\}_i$ whose union is $S$ such that
+$$f > \begin{cases}
+x & \text{ if } S \in A_i\\
+g(s) & \text{ if } S \notin A_i
+\end{cases}$$ and
+$$\begin{cases}
+x & \text{ if } S \in A_j\\
+f(s) & \text{ if } S \notin A_j
+\end{cases}> g$$
+\end{enumerate}
+
+\begin{myt}
+Savage Theorem: Assume $X$ is finite. Preference ordering satisfies (1) to (6) if and only if there exists probability $p$ on states $S$ and a non-constant utility $U: X \to \mathbb{R}$ such that $$f \succeq g \iff \int_S U(f(s))dp(s) \geq \int_S U(g(s))dp(s)$$
+\end{myt}
+
+\subsubsection{Sure Thing Principle (2)}
+Horse race $A$ as horse
+\begin{table}[htp]
+\caption{default}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+& A wings & A not wins \\
+\hline
+1 & Paris & Rome\\
+2 & London & Rome \\
+3 & Paris & LA \\
+4 & London & LA\\
+\hline
+\end{tabular}
+\end{center}
+\label{Horse Race wining result}
+\end{table}%
+
+$1 \succeq 2 \iff 3 \succeq 4$
+
+\subsection{Ambiguity}
+It is situation that people don't have subjective probability. Here we will talk about risk vs known probabilities and uncertainty vs unknown probabilities. 
+
+\subsubsection{Ellsberg Paradox}
+2 Urns and 100 balls in each and they are black and red. 
+\begin{description}
+\item[Option 1] In Urn 1, you have 50 black and 50 red. In Urn 2, you have 100 balls black and red. You get paid \$10 for black ball. 
+\item[Option 2] In Urn 1, you have 50 black and 50 red. In Urn 2, you have 100 balls black and red. You get paid \$10 for red ball. 
+\end{description}
+
+
+\subsubsection{MaxMin Approaches (Wald)}
+$f$ is a policy, maps states $S$ to outcomes $x$ saying that 
+$$f\geq g \iff \min_{s\in S} f(s) \geq \min_{s\in S}g(s)$$
+Here we assume there is no probabilistic information at all. 
+
+\subsubsection{MinMax Regret (Savage)}
+Regret associated with states 
+$$r(s, g) = \max_{f \in F} [f(x)] - g(s)$$
+
+The Max regret is 
+$$\max_{s \in S} r(g)  =\max_{s\in S}\{ \max_{f\in F}[f(s)] - g(s)\}$$
+You should choose a $g$ to minimize the max regret. 
+$$\min_{g\in F} \max_{s \in S}\{\max_{f \in F}[f(s) - g(s)]\}$$
+
+\subsubsection{MaxMin Expected Utility (Gilboa and Schmildler)}
+\begin{enumerate}
+\item Complete transitive ordering
+\item Continuity: For every $f, g, h \in F$, if $f > g > h$ then
+$$\exists \alpha, \beta \in (0, 1) \text{ s.t. } \alpha f + (1- \alpha) h > g > \beta f + (1- \beta)h$$
+\item For every $f, g$, $f(s) \geq g(s), \forall s \in S \implies f \geq g$. 
+\item Independence :For every $f, g$, every constant $h \in F$, $\forall \alpha \in (0, 1), f \geq g \iff \alpha f + (1-  \alpha)h \geq \alpha g + (1- \alpha) h$.  
+\item Uncertainty Aversion: $\forall f, g \in F, \forall \alpha \in (0, 1)$, $f \sim g \implies \alpha f + (1- \alpha)g \geq f \sim g$. 
+\end{enumerate}
+
+Preference satisfies assumptions if and only there exists closed convex sex of probabilities $C$ and a non-constant function $u: X \to \mathbb{R}$ such that $$\min_{p\in C}\int u(f(S))dp(s) \geq \min_{p \in C}\int _S u(g(s))dp(s)$$
+
+\subsubsection{Smooth Ambiguity Aversion}
+Multiple probability distributions given arise naturally from different models of economy, stock market, etc. $P_i$ is distribution over states, $i = 1, \cdots, I$. Each $P_i$ comes from model $M_i$, 
+\begin{enumerate}
+\item $\exists u : X \to \mathbb{R}$ such that $$f \geq g \iff \int_S u(f(s))dP_i \geq \int_S u(g(s))dP_i$$
+\item $\exists$ weights $\pi(p) \geq 0, \int_P\pi(P) = 1$, a function $\phi_o: \mathbb{R} \to\mathbb{R}$ such that 
+$$f \geq g \iff \int_P\pi(P)\phi(E_P(f))d\pi \geq \int_P\pi(P)\phi(E_pg)d\pi$$
+\end{enumerate}
+
+\subsubsection{Ellsberg Paradox}
+2 Urns 100 balls each. 1 is 50 red and 50 yellow. 2 is 100 red and yellow. \$10 if you select red. Urn 1: $0.5\times 10 + 0.5\times 0 = \$5$. Urn 2: $P_n=\text{ probability of choosing red of n}=\text{\# of red in urn 2}=\frac{n}{100}$. 
+
+$$\pi_n=\text{second order probability that \# of red} = n$$
+$$u(x) = \text{linear}, u(x) = x$$
+$$\phi(x)\text{linear}, \phi(x) = x$$
+
+Value of bet on 2 is $$\sum_{n=0}^{100}\pi_np_n 10 = \sum_{n=0}^{100}\pi_n \frac{n}{10}=\sum_{n=0}^{100} \frac{1}{101}\frac{n}{10}=5$$
+
+$\pi_n$ is uniform, i.e. $\pi_n = \frac{1}{100}, \forall n$. 
+
+If the Ambiguity Aversion $\phi(x) = \sqrt{x}$, then the bet over urn 2 is 
+$$\sum_{n=0}^{100} \pi_n\phi(\frac{n}{10}) = \sum_{n=0}^{100}\frac{1}{101}\phi(\frac{n}{10}) = \frac{1}{101}\sum_{n=0}^{100}\sqrt{\frac{n}{10}}=2.1$$
+
+The certainty equivalent is 4.4.
+
+\subsection{Models}
+
+A model $m_i$ is a map from policies $f \in F$ to probability distributions over outcomes $P_i(x|m_i)$. Expected utility of policy $f$ contingent on model $m_i$ is $E[u(f|m_i)]= \int u(x)dP_i(x|m_i)$. $\pi_i$ is the estimate of likelihood that $m_i$ is the right model. Choose $f$ to maximize 
+$$\sum_i \pi_i \phi(E[u(f|m_i)])$$
+Assume that the policy $f$ is in $\mathbb{R}$. Maximize with respect to $f$. 
+$$\sum_i \pi_i \phi'(E[u(f|m_i)])E[u'(f|m_i)]=0$$ 
+
+$$\pi_i'=\frac{\pi_i\phi'(E[u(f|m_i)])}{\sum_j \pi_j \phi'(E[u(f|m_j)])}, \pi_i'\in[0, 1]$$
+If $\phi$ is linear, then $\pi'_i = \pi_i$. 
+
+Dividing FOC by denominators of $\pi_i'$
+$$\sum_i \pi_i' E[u'(f|m_i)]= 0$$
+Expectation of marginal expected utility must be zero. 
+\subsubsection{Problem}
+University endowment: 2 advisors $X$ and $Y$. They give different forecasts of movements of bonds $B$ and equity $E$. The table is in the notes. Allocate fraction $e$ to equities and $(1-e)$ to bonds. Expected utility according to $X$,
+$$x_{11}u(1.1ew+ 1.1(1-e)w) +x_{12}u(0.9ew+1.1(1-e)w) +x_{21}u(1.1ew+0.9(1-e)w)+x_{22}u(0.9ew+0.9(1-e)w)$$
+To simplify, we get
+$$EU=k+x_{12}u(w(1.1-0.2e))+x_{21}u(w(0.9+0.2e))$$
+We need to maximize with respect choice of $e$. 
+$$\frac{\partial EU}{\partial e} = 0.2\{x_{21}u'(c_{21})-x_{12}u'(c_{12})\}$$
+in general we need solve the following
+$$\max_e\{\pi_x\phi(E[U_x(e)) +\pi_y\phi(EU_y(e))\}$$
+$$\pi_x\phi'(EU_x)E[u_x'(e)]+\pi_y\phi'(EU_y)E[u_y'(e)] = 0$$
+Define the following
+$$\pi_x'= \frac{\pi_x\phi'(E[u_x])}{\pi_x\phi'(E[u_x])+\pi_y\phi'(E[u_y])}$$
+Then the FOC is just
+$$\pi'_xE[u_x'(e)]+\pi_y'E[u'_y(e)]= 0$$
+Expected marginal utility is zero. 
+
+\section{General Equilibrium}
+Firm $i$ has a production possibility set $Y_i\subset \mathbb{R}^N$, $y_i\in Y_i$ production plan. (inputs are negative and outputs are positive). Price vector $p \in \mathbb{R}^N$ and profit is $p\cdot y_i$. In addition, let's only look at the relative price so the price vector is normalized (i.e. $\sum_{i=1}^n p_i = 1$). Firm's objective is 
+$$\max_{y_i \in Y_i} p\cdot y_i$$
+
+Consumers: consumption vector $x_j \in X_j$. $x_j \subset \mathbb{R}^N_+$ consumption set. The utility function is 
+$$u_f: \mathb{R}^N \to \mathbb{R}$$ 
+Consumers have endowments $w_j \in \mathbb{R}^N$. They can also own shares in firms $\theta_{ji}$ the fraction of the firm $i$ owned by consumer $j$. Budget constraint is
+$$p \cdot x_j \leq p\cdot w_j + \sum_i \theta_{ji}\pi_i$$
+$$\max u_j(x_j) \text{ s.t. } px_j \leq pw_j + \sum_i\theta_{ij}\pi_i$$
+
+Allocation: $x^*_j, j = 1,\cdots, I$ is an allocation, feasible if $$\sum_j x_j^* \leq \sum_j w_j + \sum_i y^*_i , y_i,x_j \in \mathbb{R}^N$$
+$$\sum_jx_{ji}^* \leq \sum_j w_j + \sum_i y_i^*$$
+
+Pareto Efficient: An allocation $x_j^*, j = 1, \cdots, J$, $y_i^*, i =1, \cdots, I$ is Pareto efficient if it is feasible. if there is no other feasible allocation $\hat{x}_j$, such that $u_j(\hat{x}_i)\geq u_j(x_j^*), \forall j, \exists k$, such that $u_k(\hat{x}_k) > u_k(x_k^*)$. Everyone is at least as well off as at $x_j^*$ sand someone is better off. 
+
+Pareto Superior: $(x_j^*, y_i^*)$ is Pareto superior to $(\hat{x}_j, \hat{y}_i)$ if $u_j(x_j^*)\geq u_j(\hat{x}_j), \forall j$ and there exists $k$ such that $u_k(x_k^*)> u_k(\hat{x}_k)$
+
+Competitive Equilibrium: price vector $^*$, set of production plans $y_i^*$ and consumption vector $x_j^*$ such that
+\begin{itemize}
+\item $\forall i$, $y_i^*$ maximizes $p^*\cdot y_i, y_i \in Y_i$ 
+\item $\forall j$, $x_j^*$ maximizes $u_j(x_j)$ such that $p^*\cdot x_j \leq p^* \cdot w_j +\sum_i \theta_{ij}\pi_i$
+\item $\sum_i x^*_j \leq \sum_j w_j + \sum_i y_i^*$
+\end{itemize}
+
+\subsection{Edgewood Box}
+2 consumers $a, b$. Two goods, $1, 2$. No firms. Under exchange economy, total endowment good $i$, $w_i$, 
+$$w_i = w_{a_i}+w_{b_i}, i=1, 2$$
+Individual $a$ has $w_{a_1}, w_{a_2}$ and $b$ has $w_{b_1}, w_{b_2}$ 
+
+\begin{center}
+\includegraphics[scale=.9]{plot/box.png}
+\end{center}
+
+Any point in the box represents a division of $w_1$ and $w_2$ between $a, b$. 
+
+\begin{center}
+\includegraphics[scale=.9]{plot/box2.png}
+\end{center}
+
+The graph above, it shows that A sells DE of 1 and buys AD of 2; B buys EG of good 1 and sells EF of 2. Here we can notice that demand does not match the supply. 
+
+We can easily see that all competitive equilibrium are Pareto efficient. 
+
+\begin{myprop}
+If preferences are monotone, then any competitive equilibrium ($p^*, x^*_j, y_i^*$) is Pareto Efficient. 
+\end{myprop}
+
+\begin{proof}
+\begin{enumerate}
+\item $u_j(x_j) > u_j(x_j^*)  \implies p^* \cdot x_j > p^*\cdot x_j^*$ (utility maximization)
+\item $u_j(x_j) \geq u_j(x_j^*) \implies p^*\cdot x_j \geq p^*\cdot x_j^*$ (non-satiation)
+\item $(x'_j, y_i')$ be Pareto superior to $(x_j^*, y_i^*)$
+
+From 1) and 2), $p^*\cdot x_j' \geq p^*\cdot x_j^*, \forall j$ and $p^*\cdot x_j' > p^*x_j^*, \text{ for some } j$. Add up $$\sum_j p^*\cdot x_j' > \sum_j x^*_j = \sum_j p^* w_j + \sum_i p^*y_i^*$$
+\item Firms maximizes profits at $y_i^*$ 
+$$p^*\cdot y'_i \leq p^* \cdot y_i^*, \forall i$$
+
+$$p^* \sum_i y_i' \leq p^*\sum_i y_i^*$$
+
+$$\sum_j p^*\cdot x_k' > \sum_j p^*\cdot w_j + \sum_i p^*\cdot y_i^* \geq \sum_j p^* w_j + \sum_i p^* \cdot y_i'$$
+$$p^* \sum_j x_j' > p^* \sum w_j + p^*\sum_i y'_i$$
+$$\sum_j x_j' \leq \sum_j w_j + \sum_i y_i'\text{ feasible}$$
+This contradicts. 
+\end{enumerate}
+\end{proof}
+
+\subsection{Existence of Competitive Equilibrium}
+$$Z(p) = \sum_j x_j(p) - \sum_j w_j - \sum_i y_i(p)$$
+where $x_j(p)$ is the utility maximization choice at price $p$ and $y_i(p)$ is profit maximization at prices $p$. $Z(p)$ is the excess demand function. We have an equilibrium if $Z(p) = 0$. Is there a $p^*$ such that $Z(p^*) \leq 0$? Look at $Z(p)$ map from prices to $\mathbb{R}^N$ where $\sum_n p_{n}= 1$, $p_n\geq 0, \forall n$. And $p \in \text{Simplex }S^N$ and $Z(p): S^N \to \mathbb{R}^N$
+
+Define $Z^+(p)$ where $Z^+_{\rho}(p) = \max\{Z_{\rho}(p), 0\}$. Note:
+$$Z^+(p)\cdot Z(p) = \sum_{\rho}\max\{Z_{\rho}, 0\} Z_{\rho} = 0 \implies Z(p) \leq 0$$ 
+
+Let the following 
+$$a(p) = \sum_{\rho} [p_{\rho}+Z_{\rho}^+(p)] \in \mathbb{R}$$ 
+
+Raising the price of goods for which demand is bigger the supply ($Z_{\rho}(p) > 0$). Let's define 
+$$f(p) = \frac{1}{a(p)} [p+Z^+(p)]$$
+$$f(p): S^N \to S^N$$
+There exists $p^*$ such that $f(p^*) = p^*$. Then 
+\begin{align*}
+0 &= p^*\cdot Z(p^*) = f(p^*) \cdot Z(p^*) \\
+&=\frac{1}{a(p^*)}[p^* + Z^+(p^*)]\cdot Z(p^*)\\
+&=\frac{1}{a(p^*)}[p^*\cdot Z(p^*) + Z^+(p^*)\cdot Z(p^*)]\\
+&=\frac{1}{a(p^*)} Z^+(p)^*Z(p^*)
+\end{align*}
+
+Here $p\cdot Z(p)$ is the value of demand minus the value of endowments minus the profits. It equals to the sum of all individuals' budget constraints. With non-satiation 
+$$Z(p^*) = 0$$ otherwise it is less than equal to 0.
+
+\subsection{Public Goods (Private Goods)} 
+Non-excludable and non-rival goods. People who benefit from a public good but don't pay for it are ``free rider". Non-rival means one person's consumption does not influence others'. Public good has both non-excludable and non-rival properties. 
+
+\begin{center}
+\includegraphics[scale=.6]{plot/publicgood.png}
+\end{center}
+
+\subsubsection{Efficient Provision of Public Goods}
+Public good either provided or not $[0, 1]$ choice. Two people $i, i = 1, 2$. Private good, $x_i$ is $i$'s consumption of private good. 
+$$x_i + g_i = w_i$$ 
+where $x_i = \text{spending on private on}$, $w_i = \text{wealth}$ and $g_i$ is contribution to the cost of the public good. 
+
+The rule for provision $g_1+g_2 > \text{cost}. =c$, it is provided and $g_1 + g_2 < c$, not provided. 
+$$\text{Utility} = \begin{cases}
+u_i(1, w_i- g_i) & g_1 + g_2 > c\\
+u_i(0, w_i) & g_1 + g_2 < c
+\end{cases}$$
+When is the first Pareto superior to the second? 
+
+True if there are $g_1, g_2$ such that $g_1 +g_2 > c$ and $u_i(1, w_i - g_i) > u_i(0, w_i), i =1, 2$. 
+
+Willingness-to-pay for public good (WTP) is defined as $r_i$ such that (maximum it would make sense to pay)
+$$u_i(1, w_i - r_i) = u_i(0, w_i)$$
+
+$$u_1(1, w_1 - g_1) > u_1(0, w_1) = u_1(1, w_1 - r_1)$$
+$$u_2(1, w_2 - g_2) > u_2(0, w_2) = u_2(1, w_2- r_2)$$
+Then $w_1 - g_1.> w_1 - r_1$ and $w_2 - g_2 > w_2 - r_2$. Also we know that $g_1 < r_1, g_2<r_2$ so $r_1 + r_2 > g_1 + g_2 > c$. It is efficient to provide public good if and only if $r_1 + r _2 > c$, i.e., if sum of WTP's exceeds costs. 
+
+\begin{proof}
+Suppose $r_1 + r _2 > c$ and choose $g_i$ such that $g_i < r_i$ and $g_1+g_2 > c$ and 
+$$u_1(1 , w_1 - g_1 ) > u_1(0, w_1), u_1(1, w_1 - r_1) = u_1(0, w_1)$$
+\end{proof} 
+
+\subsection{Game Theory}
+\subsubsection{Prisoner's Dilemma}
+\begin{center}
+\includegraphics[scale=.6]{plot/prisoners.png}
+\end{center}
+
+The Nash equilibrium is the confess/confess case but the silent/silent can be the best outcome. This means that individually rational outcome is not Pareto efficient. 
+
+\subsubsection{Nash Equilibrium}
+Players $i, i = 1, \cdots, I$. Chooses a strategy $s_i \in S_i$ such that $S_i$ is the set of possible strategies. 
+$$S_{-i} = (S_1, S_2, \cdots, S_{i-1}, S_{i+1}, S_{i+2}, \cdots, S_I)$$ 
+$$(S_i^*), i = 1, \cdots, I$ forms a Nash Equilibrium if $\forall i$, $S_i^* \max_{s_i \in S_i} u_i(S_i, S_{-i}^*)$
+
+Reaction function $f_i(s_{-i})$ is a person $i$'s best response to the list of moves $S_{-i}$ by others. 
+$$(S^*_1, \cdots, S_I^*)$$ such that $f_i^*(S_{-i}^*) = S^*_i$
+
+Suppose there are two people, $i = 1, 2$. Public good, cost is $c$. Each person offers $o_1$ or $o_2$ towards cost. Good is provided if $o_1 +o_2 > c$. $r_1 + r_2 > c$. People will offer $o_i < r_i$. $(0\leq o_i\leq r_i)$. Suppose person 1 offers $o_1 <.c$. Choose $o_2 = c - o_1$, then good is provided.  The option is $u_2(1, w_2 -(c-o_1))>u_2(0, r_2)=u_2(0, w_2)$. 
+
+\subsubsection{The General Case}
+\begin{myprop}
+Suppose that the consumption vectors $x^*_j$ minimize the weighted utility sum $\sum_j \alpha_j U_j(x_j)$, $\sum_j x_j \in (\sum_i Y_i + \sum_j w_j)$ where $\alpha_j \geq 0$. Then $x_j^*$ are Pareto efficient. 
+\end{myprop}
+
+\begin{proof}
+Suppose not. There exists $x_j'$ feasible Pareto Superior, i.e. $u_j(x_j') \geq u_j(x_j^*), \forall j$ and for some $j$: $u_j(x_j') > u_j(x_j^*)$. Therefore
+$$\sum_j \alpha_j u_j(x_j') > \sum_j \alpha_j u_j(x_j^*)$ contradicts assumption $\alpha_j = 1, \forall j$. 
+\end{proof}
+
+$c_j$ is $j$'s consumption of private good. $w_j$ is $j$'s endowment. $g_f$ is what $j$ pays to provision public good. $c_j +g_j = w_j$ and $g=\text{amount of public good}$ and $g= f(\sum_j g_j)$. 
+
+How much will $j$ offer for the public good? Pick $c_j$, $g_j$ to maximize $u(c_j, g)$ such that $c_j + g_j = w_j$ and $g= f(\sum_j g_j)$. First order condition: $$\frac{\partial u_j/\partial g}{\partial u_j / \partial c_j} = \frac{1}{f'}$$ It shows the ratio of the marginal utility of the public good and marginal utility of private good. Above is the necessary and sufficient condition for Pareto efficient. 
+
+Efficiency: $\max \sum_j \alpha_j u_j(c_j, g)$ such that $g = f( \sum_j g_j), \sum_f c_f = \sum_j w_j - \sum_jg_j$. If maximize the weighted sum utility, then Pareto efficient. 
+$$\alpha = \sum u_j(c_j, g), \lambda(\sum w_j - \sum g_j - \sum c_j)$$
+From first order condition we get
+$$\sum \frac{\partial u/\partial g}{\partial u_j/\partial c_j} = \frac{1}{f'}$. Therefore, Nash equilibrium level of provision of public good is inefficient as $\partial u_j/\partial c_j < \sum_j \partial u_j/\partial c_j$. Therefore, $g_{NE} < g_{PE}$.
+
+For firm, revenue is $g\sum_j p_j$. Then $\pi = f(z)\sum_j p_j -z$ where $z$ is the input to public good. $g = f(z)$, $f'\sum_j p_j = 1$ and $\sum_j p_j = \frac{1}{f'}$. Therefore, $ \sum_j \frac{\partial u_j /\partial g}{\partial u_j/\partial c_j} = \frac{1}{f'}$. 
+
+Market for public good, but with potential different price for all buyers (price discrimination). Each person pays $p_j$ for each unit of public good. 
+$$\max u_j(c_j, g)$$ such that $w_j = c_j + gp_j$. The FOC is just $\frac{\partial u_j/\partial g}{\partial u_j/\partial c_j} = p_j$ 
+
+\end{document}

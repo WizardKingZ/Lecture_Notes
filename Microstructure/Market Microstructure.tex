@@ -1,0 +1,343 @@
+\documentclass[11pt, a4paper, oneside]{article}
+\usepackage{geometry}               % See geometry.pdf to learn the layout options. There are lots
+\geometry{left=1.9cm, top=1.9cm, right=1.9cm, bottom=1.9cm, footskip=0.5cm}
+%\geometry{landscape}               % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}   % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb} 
+\usepackage{epstopdf}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{paralist}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\newtheorem{mydef}{Definition}
+\theoremstyle{definition}
+
+\newtheorem{myprop}{Proposition}
+\theoremstyle{proposition} 
+
+\newtheorem{mycor}{Corollary}
+\theoremstyle{corollary} 
+
+\newtheorem{myl}{Lemma}
+\theoremstyle{lemma}
+
+\newtheorem{myt}{Theorem} 
+\theoremstyle{theorem} 
+
+\title{Market Microstructure Theory}
+\author{Johnew Zhang}
+
+\begin{document} 
+
+% provides formulas for life contingencies 
+\def\angl#1{{% 
+\vbox{\hrule height .2pt 
+\kern 1pt 
+\hbox{$\scriptstyle {#1}\kern 1pt$}% 
+}\kern-.05pt \vrule width .2pt 
+}} 
+
+\def\tcelife#1{{\buildrel \circ \over e}_{#1}}
+
+\maketitle
+
+\hline
+
+\tableofcontents
+\addcontentsline 
+
+\newpage
+
+\section{Asymmetric Information}
+Some traders know more than others 
+\begin{itemize}
+\item Rational Expectation Equilibrium (GS 1980)
+\item Kyle (1985) Models
+\item Glosten/Milgrom (GM) (1985) Models
+\end{itemize}
+
+In Oct 19, 1987, stock market dropped 20\% on Black Monday. This created more attentions on the study of market microstructure. 
+
+\subsection{Rational Expectation}
+Suppose we have utility function $E[u(\tilde{w})|\Theta]$ and here is one single security, $X$. Let's assume $M$ observe only the price and $N$ observe some signal $S$ correlated with $X$. 
+
+Now, let $X \sim N(\mu, \sigma_x^2)$ and utility be CARA, negative exponential. Suppose price is reflected by signal $X = S +\varepsilon, S \perp \varepsilon, var(X|S) = \sigma_{\varepsilon}^2$ so $E[X|S] = S$. More commonly, $S = X + z, z \perp X$. Then we have
+$$E[X|S] = \frac{\sigma^2_{z}}{\sigma_x^2+\sigma_s^2} \mu_x + \frac{\sigma_x^2}{\sigma_x^2+\sigma_z^2} S = \mu + \frac{\sigma_x^2}{\sigma_x^2+\sigma_z^2}(S - \mu)$$
+$$Var(X|S) = \frac{\sigma_x^2\sigma_z^2}{\sigma_x^2+\sigma_z^2}$$
+In addition, assume $r_f = 1$ and $w_0$ is irrelevant. Then the $N$ informed (certainty equivalent) maximize
+$$\max_h h(E[X|S] - P) - \frac{\rho}{2}Var(X|S)h^2$$
+where $P$ is the price. 
+We can get 
+$$h_I = \frac{E[X|S] - P}{\rho Var(X|S)}$$
+For the $M$ uninformed maximize
+$$\max_h h(E[X] - P) - \frac{\rho}{2}Var(X)h^2$$
+We can get
+$$h_{UR} = \frac{E[X] - P}{\rho Var(X)}$$
+Per capital supply $k$ and per capital noise trade $z(N+M)$, $z\sim N(0, \sigma_z^2)$. Therefore, the final demand should be equal to the supply
+$$N\left(\frac{E[X|S] - P}{\rho Var(X|S)}\right) + M\left(\frac{E[X] - P}{\rho Var(X)}\right) + z(M+N) = k(M+ N)$$
+$$P\left(\frac{\lambda}{\rho Var(X|S)} + \frac{1-\lambda}{Var(X)} \right) = \frac{\lambda E[X|S]}{\rho Var(X|S)} + \frac{(1- \lambda)E[X]}{\rho Var(X)} - (k -z)$$ where $\lambda = \frac{N }{M+N}$
+$$P = \mu + \frac{(S-\mu)\lambda}{\rho \sigma^2_{\varepsilon}\kappa^2} - \frac{X - z}{\kappa^2}$$
+where $\kappa^2 = \frac{\lambda E[X|S]}{\rho Var(X|S)} + \frac{(1- \lambda)E[X]}{\rho Var(X)}$
+
+For the naive uninformed, they trade 
+$$\frac{\mu - P}{\rho \sigma_X^2} = \frac{-(S- \mu)\lambda}{\rho \sigma_{\varepsilon}^2 \kappa^2} + \frac{k- z}{\kappa^2}$$
+On an average day, uninformed expect to hold
+$$\frac{k}{\kappa^2}$$
+Holding less than usual more often it results in high $X$ and holding more means the subsequent $X$ is low. This means the naive uninformed trader is always on the wrong side of the trade.
+
+Now, let's suppose
+$$h_{UI} = \frac{E[X|P] - P}{\rho Var(X|P)}$$
+$$\frac{\lambda (E[X|S] - P)}{\rho Var(X|S)} + \frac{(1- \lambda) (E[X|P] - P)}{\rho Var(X|P)} + z - k = 0$$
+where $E[X|P] = \alpha + \beta P$ and $Var(X|P) = \gamma \sigma_X^2$
+
+$$P() + (()) = Y = S + \frac{\rho \sigma_{\varepsilon}^2}{\lambda} z = X + \varepsilon + \frac{\rho \sigma_{\varepsilon}^2}{\lambda} z$$
+
+Then $$E[X|P] = E[X|Y] = \frac{\sigma_X^2}{\sigma_X^2 + \sigma^2_{\varepsilon}+ \rho^2 \sigma_{\varepsilon}^2\sigma_z^2/\lambda^2}(X-\mu) + \mu$$ 
+$$Var(X|Y) = \frac{\sigma_X^2 (\sigma_{\varepsilon}^2 + \rho^2\sigma_{\varepsilon}^4 \varepsilon_z^2)}{\sigma_X^2 + \sigma^2_{\varepsilon}+ \rho^2 \sigma_{\varepsilon}^2\sigma_z^2/\lambda^2}\gamma$$
+$$\alpha + \beta P = ()\frac{Y - \mu - ()}{()} = ()P + \text{constant}$$
+
+Note, $E[U_I|P] = \frac{Var(X|S)}{Var(X|P)}E[U_u|P] \implies \frac{E[U_I|P]}{E[U_u|P]} =  \frac{Var(X|S)}{Var(X|P)}$. If there is cost of collecting information $C$, then the net of the cost, informed has advantage in equilibrium ($\lambda$), a function of $\rho, C, \sigma_{\varepsilon}^2$ but not $\sigma_z^2$.  As $\sigma_z^2$ goes up and brings in more informed, then the net no difference. 
+
+\subsection{Kyle Model}
+Future value $V^*$ single informed traders sees a signal and calculates $V = E[V^*|S]$, $V \sim N(\mu_0, \Sigma_0)$. Then we have noise traders trade $\mu \sim N(0, \sigma_{\mu}^2)$. Informed sends order $X$ to the market and noise traders trade $\mu$ in the market (zero profit the market maker sees $X+\mu$ and chooses a price $p(X+\mu)$).
+
+Informed maximizes 
+$$\max_{X} E[(V - p(X+\mu))X|V]$$
+\begin{align*}
+\max_X E[(V^* - p(X+\mu))X|S] &= E[E[(V^*-p(X+\mu))X|S, \mu]|S]\\
+&= E[X((V - p(X+\mu))|S]  = E[X(V - p(X+\mu))|V]  && E[V|E[V|S]] = E[V|S] \\
+\end{align*}
+
+
+
+The market maker profit is 
+\begin{align*}
+E[(p(X+\mu) - V^*)(X+\mu)|X + \mu] &= E[(p(X+\mu) - V)(X+\mu)|X+\mu] \\
+&= (p(X+\mu) + E[V|X+\mu])(X+\mu)
+\end{align*}
+
+zero expected profit conditional on $X+\mu$ that is 
+$$p(X+\mu) = E[V|X+\mu]$$
+
+\begin{enumerate}
+\item $V \sim N(\mu_0, \Sigma_0)$ 
+\item $\mu \sim N(0, \sigma_{\mu}^2)$
+\item $X = \arg \max E[(V - p(X + \mu))X|V]$ 
+\item $p(X+ \mu) = E[V|X+\mu]$
+\end{enumerate}
+
+Hypothesis is that $p(X+\mu) = \mu_0+\lambda (X+\mu)$. Informed thinks $p(X+\mu) = \mu_0 + \lambda(X+\mu)$ and the market maker thinks that informed trade $X = \beta(V - \mu_0)$. Hence the informed will hypothesize
+$$\max_X (V - \lambda X - \mu_0)X$$
+Hence. $$X^* = \frac{V - \mu_0}{2 \lambda}, \beta = \frac{1}{2\lambda}$$
+$$E[V|X+\mu] = \mu_0 + \frac{\beta \Sigma_0}{\beta^2 \Sigma_0 + \sigma_{\mu}^2}(X+\mu)$$
+In equilibrium 
+$$\lambda = \frac{\beta \Sigma_0}{\beta^2 \Sigma_0 + \sigma_{\mu}^2}=\frac{\sqrt{\Sigma_0}}{2\sigma_{\mu}}, \beta = \frac{\sigma_{\mu}}{\sqrt{\Sigma_0}}$$ 
+
+The market maker will hypothesize $X = \beta(V - \mu_0)$. 
+\begin{align*}
+E[V|X+\mu] &= E[V|\beta(V - \mu_0) + \mu] = \mu_0 +\frac{Cov(V, (X+\mu)) (\beta(V- \mu_0) + \mu))}{Var(X+\mu)} \\ 
+&=\mu_0 + \frac{\beta \Sigma_0}{\beta^2\Sigma_0 + \sigma^2_{\mu}}(X + \mu) 
+\end{align*}
+
+If $\beta = \frac{1}{2\lambda}$, the market marker is correct. If $\lambda = \frac{\beta \Sigma_0}{\beta^2 \Sigma_0 + \sigma_{\mu}^2}$, then the informed are right. In general, we can consider $\beta$ is the aggressiveness of the informed and $\lambda$ measures the fragility of the market. In addition, the reciprocal shows the depth of the market. 
+
+If $\sigma_{\mu}^2$ increases, the signal to noise ratio goes down and it leads to decreasing of $\lambda$. As $\lambda$ goes down, the cost of trade goes down and informed trades more aggressively. The trading profit can be characterized as $(V- \mu_0)X - (V - \mu_0 - \lambda X)X$ (``price impact cost"). In equilibrium, we can find that when $\sigma_{\mu}$ goes up, $\lambda$ goes down; when $\Sigma_0$ goes up, then the $\lambda$ goes up. 
+
+Let's suppose $p_1$ is the price realized then
+$$Var(p_1) = Var(\mu_0 + \lambda(X+\mu)) = \lambda^2(\beta^2 \Sigma_0 + \sigma_{\mu}^2) = \frac{\Sigma_02\sigma_{\mu}^2}{4\sigma_{\mu}^2} = \frac{\Sigma_0}{2}$$  
+
+$$Var(V) = Var(V|X+\mu) + Var(E[V|X+\mu]) \implies  \Sigma_0 = Var(V|X+\mu) + \frac{\Sigma_0}{2}$$
+Then we have
+$$Var(V|X+\mu) = \frac{\Sigma_0}{2}$$
+The informed profit is 
+$$\frac{(V - \mu_0)^2}{2\lambda} - \frac{(V- \mu_0)^2}{4\lambda} = \frac{(V- p_0)^2}{4\lambda}$$ 
+The expected profit is
+$$\frac{\Sigma_0}{4\lambda} = \frac{\Sigma_0}{4\frac{\sqrt{\Sigma}}{2\sigma_{\mu}}} = \frac{\sqrt{\Sigma_0} \sigma_{\mu}}{2}$$
+The profit of the noise trader is the opposite of the above. 
+
+\subsubsection{Kyle Dynamic Model}\footnote{Note: The S\&P 500 index reinvests dividends in the stocks as paid but the SPDR pays dividends quarterly. Hence, they are different. Trades on different exchanges remain on different exchange, i.e. long position will remain long and short position will remain short. }
+Trade at $t_1< t_2<\cdots<T$ and $\Delta t_n = t_n - t_{n-1}$ at time $t_n$ noise trade $\Delta u_n \sim N(0, \sigma_{\mu}^2\Delta t_n)$. 
+$$\mu_n = \sum_{j=1}^n \Delta u_j \to \text{Brownian Motion}$$
+$V \sim N(p_0, \Sigma_0)$ informed know $V$ and $V \perp \Delta u_n$ for all n. $\Delta x_n$ informed trade at $t_n$. $p_n$ price determined by trade at $t_n$. The profit to informed step n onward $\pi_n = \sum_{k=n}^N (V- p_k) \Delta x_k$. We have dynamic profit maximization by informed 
+$$p_n = E[V|\Delta x_1 + \Delta u_1, \cdots, \Delta x_n + \Delta u_n]$$ 
+Hypothesize 
+$$\begin{cases} p_n = p_{n-1} + \lambda_n(\Delta x_n +\Delta u_n) \\ 
+\Delta x_n = \beta_n(V - p_{n-1}) \Delta t_n \\
+\Sigma_n = Var(V|\Delta x_1+ \Delta u_1, \cdots, \Delta x_n+ \Delta u_n) \\
+E[\pi_n|p_1, \cdots, p_{n-1}, V] = \alpha_{n-1}(V- p_{n-1})^2 +\delta_{n-1}\\ 
+\end{cases}$$
+\begin{align*}
+\max &E[(V - p_n) x + \pi_{n+1}|p_1, \cdots, p_{n-1}, V]\\
+\max &E[(V- p_{n-1}-\lambda_n x)x + \alpha_n(V - \lambda_n(x+\Delta u_n) - p_{n-1})^2 + \delta_n|p_1, \cdots, p_{n-1}, V] \\
+\max & (V - p_{n-1})x - \lambda_n x^2 + \alpha_n(V - p_{n-1} - \lambda_n x)^2 + \alpha_n \lambda_n^2 \sigma_{\mu}^2\Delta t_n + \delta_n\\
+0 &= V - p_{n-1} - 2\lambda_n x - 2 \alpha_n \lambda_n ( v - p_{n-1} - \lambda_n x) && FOC\\
+0 & > -2\lambda_n + 2\alpha_n \lambda_n^2 && SOC \\
+0 & < \lambda_n(1- \alpha_n \lambda_n)
+\end{align*}
+
+Therefore, the optimal
+$$x_n = \frac{(V - p_{n-1})(1- 2\alpha_n \lambda_n)}{2\lambda_n(1- \alpha_n \lambda_n)}$$
+The second order condition says $\lambda_n(1- \alpha_n \lambda_n) > 0$
+$$p_n = p_{n-1} + \lambda_n(\Delta x_n + \Delta u_n)$$
+$$\Delta x_n = \beta_n(V - p_{n-1})\Delta t_n$$
+$$E[\tilde{\pi}|p_1, \cdots, p_{n-1}, V] = \alpha_n(V - p_{n-1})^2 + \delta_n$$ 
+Therefore, 
+$$\beta_n \Delta t_n = \frac{1- 2 \alpha_n \lambda_n}{2\lambda_n(1- \alpha_n\lambda_n)}$$
+$$\max_x (x - p_{n-1}) x - \lambda_n x_n^2 + \alpha_n(V - p_{n-1} - \lambda_n x)^2 + \alpha_n^2\lambda_n^2\sigma_n^2\Delta t_n + \delta_n$$
+$\pi_n = \sum_{k=1}^N(V - p_k)\Delta x_k$ plug optimum into above. We get
+$$\alpha_{n-1} \Delta t= \frac{1}{4 \lambda_n(1- \alpha_n \lambda_n)^2}$$
+
+Therefore, 
+$$\Sigma_{n-1} = Var(V|p_1, \cdots, p_{n-1})$$
+Signal in $p_n$ is $\Delta x_n+ \Delta u$ which is $\beta._n \Delta t_n(V - p_{n-1}) + \Delta u$. The new signal information is equivalent to $V + \frac{\Delta \tilde{\mu}}{\beta_n \Delta t}$
+
+$$Var(V|p_1, \cdots, p_n) = \Sigma_n = \frac{\Sigma_{n-1} \frac{\sigma_u^2}{\beta_n^2 \Delta t}}{\Sigma_{n-1} + \frac{\sigma_u^2}{\beta_n^2 \Delta t_n}} = \frac{\Sigma_{n-1}\sigma_u^2}{\Delta t_n \beta_n^2 + \sigma_u^2}$$
+$$E[V|p_1, \cdots, p_{n-1}, \Delta x_n + \Delta u_n] = p_{n-1} - \beta_n \Sigma_{n-1}(V - p_{n-1})$$
+
+$$\lambda = \frac{\beta_n \Sigma_{n-1}}{\Sigma_{n-1} \Delta_n \beta_n^2 + \sigma_u^2}$$
+
+Let's take $\Delta t \to 0$. Therefore, $\beta_t \to \beta_t^*$, $\alpha_t \to \alpha^*_t$, $\lambda_t \to \lambda_t^*$, $\Sigma_t \to \Sigma^*_t$ where $t$ is the nth trade. Therefore, 
+$$1 - 2\alpha^*_t \lambda_t^* = 0$$
+$$\lambda_t^* = \frac{1}{2\alpha_t^*}$$ 
+$$\implies \lambda_t^* = \frac{\beta_t^*\Sigma_t^*}{\sigma_u^2}$$
+$$\alpha_{t - \Delta_t} - \alpha_t = \frac{1}{4 \lambda_t(1- \alpha_t\lambda_t)} - \alpha_t = \frac{(1- 2\alpha_t \lambda_t)\beta_t \Delta t}{2}$$
+$$\implies \frac{\alpha_t - \alpha_{t -\Delta t}}{\Delta t} = \frac{2\alpha_t \lambda_t - 1}{2}\beta_t = 0, x_t= 0, \alpha_t = \alpha^*, \lambda_t = \lambda^* = \frac{1}{2\alpha^*}$$
+
+$$\frac{\Sigma_t - \Sigma_{t - \Delta t}}{\Delta t} = \frac{-\beta_t^2 \Sigma_{t -\Delta t}^2}{\beta_t^2 \Delta t \Sigma_{t -\Delta t} + \sigma_u^2}$$
+$${\Sigma_t^*}' = -\frac{\beta_t^2 \Sigma_t^I}{\sigma_u^2} = -\frac{\sigma_u^2}{4\alpha^2}$$
+
+Hypothesize $p_t^* \to V$. That is $$\Sigma^* = \frac{\sqrt{T} \sigma_u}{2\sqrt{\Sigma_0}}, \lambda = \frac{\sqrt{\Sigma_0}}{\sigma_u \sqrt{T}}, \Sigma_t^* = \frac{\Sigma_0(T - t)}{2\sqrt{\Sigma_0}}, \beta_t^* = \frac{\sigma_u \sqrt{T}}{(T - t)\sqrt{\Sigma_0}}$$ 
+
+Suppose $\lambda_t$ were to increase, then informed will have a bigger price impact later so should trade more aggressively now, i.e., not equilibrium. Then $\lambda_t$ cannot decrease. 
+
+In a single period, 
+$$\max (V - p_0 - \lambda x - (N-1)\beta(V - p_0)) X$$
+
+The informed trade smoothly $\beta_t\Delta_t(V - p_t)$, uninformed trade ``rough". The path is a brownian motion (it is continuous but not differentiable). Moreover the price path forms a generalized brownian bridge. The Kyle model provides how fast the information gets into price and the liquidity $1/\lambda$ (``price response to trade"). The Kyle model suggests that total buys at the offer minus the total sales at bid in a 5 minute period can be used in a regression to show the change of price $\Delta p_t$. 
+$$\Delta p_t = \lambda (\text{sign of net trade})\left|\text{net trade}\right|^{1/2} + \varepsilon$$
+where $\lambda$ is a function of $\sigma_u$ and $\Sigma_0$ but $\lambda$ should not be too predictable. \footnote{The informed traders might be Gaussian mixture or the time T is unknown.}
+
+The Kyle model is a good model to see how people are trading intraday from open to close. 
+
+\subsection{Glosten/Milgrom}
+Start at $0$ end at $T$, $V$ is revealed. The continuous prices. Trade in unit quantities. Imagine there are bid\&ask spread prices set by specialist earning zero profits. Suppose for every stock, there is only one specialist (competition from limit orders). 
+
+The informed is $E[V|\mathcal{F}_t]$ and uninformed $M_t$ private valuation othorgonal to $V$ given public information $\mathcal{H}_t \subset \mathcal{F}_t$. At time $t_0$, there is an arrival $Z_t = I_tE[V|\mathcal{F}_t] + (1- I_t)M_t$ where $I_t.$ is 1 informed arrive and 0 uninformed arrive. Let's suppose the arrival rate is a poisson distribution, $\lambda_I$ for the informed and $\lambda_u$ is for the uninformed. The payoff here is
+$$E[(A_t - V)I_{Z_t > A_t}+(V_t - B_t)I_{Z_t < B_t}|\mathcal{H}_t], \text{ quoter profit }$$
+There is a specialist earning both side of the profit
+$$E[(A_t - V)I_{Z_t > A_t}|\mathcal{H}_t] = 0$$
+$$E[(V- B_t)I_{Z_t < B_t}|\mathcal{H}_t] = 0$$
+The above is equivalent to 
+$$E[(A_t - V)|Z_t >A_t, \mathcal{H}_t]P(Z_t > A_t) = 0$$
+$$E[(V- B_t)|Z_t < B_t, \mathcal{H}_t]P(Z_t < B_t) = 0$$
+Then we can get the no-regret quotes
+$$A_t = E[V|Z_t >A_t, \mathcal{H}_t]$$
+$$B_t = E[V|Z_t < B_t, \mathcal{H}_t]$$
+ The net inventory for the specialist is
+ $$E\left[\sum_n^N (I_{\text{Purchase}}A_n - I_{\text{Sale}}B_n) + \sum_n^N (I_{\text{Sale}} - I_{\text{Purchase}})V\right]$$
+ Why is this not equal to the $E[V]$ (unconditional expectation of V)? Because of winner's curse or adverse selection. Here $A_t - B_t$ is called adverse selection spread. 
+ $$P_t = I_{Z_t > A_t}A_t + I_{Z_t < B_t}B_t = I_{Z_t > A_t}E[V|Z_t > A_t, \mathcal{H}_t] + I_{Z_t < B_t}E[V|Z_t < B_t,  \mathcal{H}_t] = E[V|\mathcal{H}_{t+}]$$
+where $\mathcal{H}_{t+}$ is the transaction after time $t$ (this is a martingale). Given enough trades, the price will converge. 
+
+Let's do a simple example when $V= \{0, 1\}$. Suppose inform know $V$. Greater likelihood of informed arrives the higher the spread. As more informed knows, the larger the spread.
+
+Let's also suppose the uninformed (arrival is $\alpha$) buy with a probability $1/2$ and sell with a probability $1/2$. Let $P(V=1)=p$. Then
+$$A = P(V=1|Buy; p) = \frac{P(Buy|V=1, p)p}{P(Buy|p)} = \frac{\left(\alpha + (1- \alpha)\frac{1}{2}\right)p}{\alpha p + (1- \alpha) \frac{1}{2}}$$
+$$B = P(V=1|Sell; p) = \frac{P(Sell|V=1, p)p}{P(Sell|p)} = \frac{\frac{1}{2}(1- \alpha) p}{\alpha(1- p) + ( 1- \alpha)\frac{1}{2}}$$
+Let $p_+$ be the probability after a trade. In addition, $P_t = A$ if a buy; $B$ if a sell. $\frac{P_+}{1-P_+}$ either $\frac{A}{1- A}$ or $\frac{B}{1- B}$ is $\frac{P}{1-P}\left(\frac{1+\alpha}{1 - \alpha}\right)^Q$ where $Q = 1$ if buy at A and $0$ if sell at B. 
+
+$$\frac{p_N}{1 - p_N} = \frac{p_0}{1- p_0}(1+ \alpha)^{Q_1+\cdots + Q_N}$$
+$$\ln \frac{p_N}{1- p_N} = (Q_1+\cdots+Q_n)\ln\frac{1 + \alpha}{1-\alpha}$$
+If $V=1$, $E[Q|V=1] = \alpha$ and $E[Q|V= 0] = -\alpha$. 
+
+The valuation is
+$$ E\left[I(A -1)I_{\{V = 1\}} + (1 - I)I_{\{M > A\}} (A - V)\right]$$
+where $M \sim G$ and $I = \begin{cases} 0 & Informed \\  1 & Uninformed \end{cases}$. 
+We know that expected losses to informed is equal to expected profits from uninformed, i.e., 
+$$\alpha(A - 1) P + (1- \alpha)(1- G(A))(A - P) = 0$$
+
+For the informed, she makes $I(1-A)I_{\{V= 1\}} + I(B - 0)I_{\{V = 0\}}$. As the market maker, she has $I(A-  1)I_{\{V = 1\}} + I(0 - B)I_{\{V = 0\}} + (1- I)(A-V)I_{\{M > A\}} + (1- I)(V- B) I_{\{M < B\}}$. For the uninformed, they believe $(1- I)I_{\{M > A\}} (M - A) + (1- I)I_{\{M < B\}}(B - M)$\footnote{There exists a model involving using non-trade as an embedding information. Easley and O'Hara addresses this issue.}. Therefore, the sum is 
+$$(1- I)I_{\{M > A\}}(M - V) + (1- I)I_{\{M < B\}}(V - M)$$
+The expectations conditional on M\& I,
+$$(1- I)I_{\{M> A\}}(M - P) + (1 - I)I_{\{M < B\}} (P - M)$$
+no spread can transact at $P$ 
+$$W^{NI} = (1- I) I_{\{M > P\}}(M - P) + (1- I) I_{\{M < P\}}(P - M)$$ 
+$$W^{NI} - W^I = (1- I)\left((M-P)I_{\{P < M < A\}} + (P - M)I_{\{B < M < P\}}\right) \geq 0$$
+Welfare loss is from failure to trade when $B < M < A$. In the event $M > A$, uninformed transact so no welfare loss. 
+
+\subsection{HFT Snipping}
+
+Let $h_s$ be the half spread and $a_s$ be the adverse selection half spread (where $m_t$ is the midpoint). 
+$$P_t^T = m_t + h_S Q_t$$
+$$P_{t+1}^T = m_{t+1} + h_S Q_t$$
+$$m_{t+1} = m_t + a_S Q_t + \varepsilon_{t+1}$$
+where $Q_t = \begin{cases}
+1 & Buy \\
+-1 & Sell 
+\end{cases}$.
+Then we can get
+$$\Delta P_{t+1} = a_S Q_t + h_S (Q_{t+1} - Q_t) + \varepsilon_t$$
+Using fitch tape. we can look at the spread and trade but the data is not signed. We can infer $Q_t = 1$ if $P_t > P_{t-1}$ or if $P_t = P_{t-1} > P_{t -2}$ and so on. 
+$$\Delta P_t = \alpha sign(q_t) + \beta q_t + \gamma (sign(q_t) - sign(q_{t-1})) + \delta (q_t - q_{t-1}) + \varepsilon_t$$
+where $q_t$ is the signed volume \footnote{Hasbrouck JF 91 using VAR approaches to address this problem} 
+
+For marketable buy hitting offer $A_t - m_{t+5}$ and for marketable sell hitting bid $m_{t+5} - B_t$. The transaction price is at $t+5$, $P^T_{t+5}$ in GM we have $E[P_{t+5}^T|P_t^T] = P_t^T$. Realized the spread in GM world is 0. With no asymmetric information, it is average quoted spread. Why do we think there is a negative realized spread? Either pay penny per share to cross the spread or half negative liquidity provision profits of half a penny. 
+
+Let $V = \begin{cases} 0 \\ 1 \end{cases}$ and $P = \frac{1}{2}$. Then 
+$\alpha(A - 1) + (1- \alpha)\frac{1}{2}(A - \frac{1}{2}) = 0$ and $A = 0.5 + 0.5 \alpha$. Let $N$ be the HFT. They either snipe or make a market. When event is announced, then the HFT learn. the first of the event and go to the market. With the probability $\frac{1}{N}$, then $HFT^i$ finds at first if $HFT^i$ is market maker and cancels the quote; $HFT^i$ is sniping hit the quote. The profit from sniping is the profit from making the market, sniping an offer side $\alpha\frac{1}{N}\frac{1}{2}(1 - A)$. The market maker $\frac{1}{2}\alpha\frac{1}{N} 0+ \frac{\alpha(N-1)}{N}\frac{1}{2}(A - 1) + (1- \alpha)\frac{1}{2}(A - \frac{1}{2})$. If this market market is not HFT, then $(1- \alpha)\frac{1}{2} (A - \frac{1}{2}) + \alpha \frac{1}{2}(A - 1)$. The high speed trader can undercut the low speed. 
+
+In equilibrium, the expected profit from snipping equals to the expected profit from quote. In other words, 
+$$\alpha \frac{1}{2} \frac{1}{N}(1- A) = (1- \alpha) \frac{1}{2} (A - \frac{1}{2}) + \alpha \frac{1}{2} \frac{N-1}{N}(A - 1)$$
+$$(1- \alpha) \frac{1}{2} ( A - \frac{1}{2}) + \alpha \frac{1}{2} ( A - 1) = 0, A = \frac{1}{2} + \frac{1}{2}\alpha$$
+Therefore, the profit of snipping is
+$$\alpha \frac{1}{2}\frac{1}{N}(\frac{1}{2} - \frac{1}{2}\alpha)$$
+
+\subsection{Is Electronic Limit Order Book Unavoidable}
+Let's define the step function $R'(q)$, 
+$$R(q) = \int_0^q R'(t)$$
+For q positive, paid by buyer (i.e. recurred by quotes); for q negative, $R(q) < 0, -R(q)$ amount recurred by trader (paid buy quotes). 
+
+Let $\tilde{q}$ randomly arriving order buy if it is bigger than 0, and sell if it is smaller than 0. The realized profit of the book is 
+$$R(\tilde{q}) - V\tilde{q} = \int_0^{\tilde{q}} R'(q) - Vdq = \int_0^{\infty} I_{\tilde{q} > q}(R'(q) - V) dq$$ 
+where $V$ is payoff per share. 
+The expected profit 
+$$E[R(\tilde{q}) - V\tilde{q}] = \int_0^{\infty} E[I_{\tilde{q} > q}(R'(q) - E[V|\tilde{q} > q])dq = \int_0^{\infty}P(\tilde{q} > q)(R'(q) - E[V|\tilde{q} > q] dq$$
+Zero profit condition so $R'(q) = E[V|\tilde{q}> q]$ (upper tail condition)
+
+Suppose the marginal valuation is $M(\omega, q)$. Some trader with this valuation chooses $q(\omega)$ optimally observing $R'(q)$. Assume $$E[V|M(\omega, q) = m] = > E[V|M(\omega, q) =\hat{m}], m > \hat{m}$$
+$$E[V|\tilde{q}> q] = E[V|M(\omega, q) > R'(q)]$$ 
+where $\omega$ is a type of characteristic, $e.g. \omega = S + z_iY$. 
+
+Let's suppose $m(z ,q) = z - q$ and $E[V|z ] = \alpha z$. Then we have
+\begin{align*}
+E[V|\tilde{q} > q] &= E[V|M(\omega, q) > R'(q)] = E[V|\omega - q > R'(q)] \\
+&= E[V|\omega > q + R'(q)] = E[E[V|\omega]|\omega > q + R'(q)] \\
+R'(q) &= \alpha E[\omega|\omega > q + R'(q)]
+\end{align*}
+
+Let $\omega \sim \frac{1}{2}\lambda e^{-\lambda |t|}$, where $E[\omega|\omega > t] = \frac{1}{\lambda} + t$. Then we get
+$$R'(q) = \alpha(\frac{1}{\lambda} + q + R'(q))\implies R'(q) = \frac{\alpha}{\lambda(1-\alpha)} + \frac{\alpha}{1- \alpha}q$$
+
+The average price is $R(q)/q$. 
+$$E[V|\tilde{q} = q] = E[V|\omega = q + R'(q)] = \alpha(q + R'(q)) = \frac{\alpha^2}{\lambda(1- \alpha)} + \frac{\alpha}{1- \alpha} q$$
+
+\subsubsection*{Remark}
+The limit order book is easy to compute the equilibrium. We can write the following
+$$I_{\tilde{q} > q} = I_{inf}I_{V > R'(q)} + (1-I_{inf})I_{\tilde{u}>q}$$where $I_{inf} = \begin{cases} 1 & informed \\ 0 & uninformed\end{cases}$ and $\tilde{u}$ is the noise trade. The expected profit to quoters is 
+$$\int_0^{\infty} E[(R'(q) - E[V|\tilde{q}> q])dq$$ 
+
+The profit of market maker at the point of trade is
+\begin{align*}
+&E[\alpha I_{V > R'(q)}(R'(q) - V) + (1-\alpha)I_{\tilde{u} > q}(R'(q) -V)] \\ 
+&= \alpha P(V > R'(q))(R'(q) - E[V|V>R'(q)]) + (1- \alpha) P(\tilde{u} > q)(R'(q) - E[V])\end{align*}
+
+We can get both sums as
+$$i(p) = \alpha E[I_{V > p}(p- V)]$$
+$$u(p) = (1- \alpha)(p - E[V])$$
+The equilibrium of $R'(q)$ is $i(R'(q)) + u(R'(q))P(\tilde{u} > p)=0, \forall q$. For this to be a valid equilibrium, $R'(q)$ must be non-decreasing. If there are N quoters, there is a mixing equilibrium and this converges to $R'(q) - E[V|\tilde{q} > q]$ zero profit equal as $N \to \infty$. 
+
+Suppose there are three quoters coming to the market all quoting at $p_1 = E[V|\tilde{q}>Q_1]$. The expected profit per share at least for $\#$ is $p_1 = E[V|\tilde{q} > q]$ and for $\#2$ is $p_1 = E[V|\tilde{q} > q_1 + q_2]$. 
+
+\end{document}

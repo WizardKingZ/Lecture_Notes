@@ -1,0 +1,524 @@
+\documentclass[11pt, a4paper, oneside]{article}
+\usepackage{geometry}               % See geometry.pdf to learn the layout options. There are lots
+\geometry{left=1.9cm, top=1.9cm, right=1.9cm, bottom=1.9cm, footskip=0.5cm}
+\geometry{letterpaper}                  % ... or a4paper or a5paper or ... 
+%\geometry{landscape}               % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}   % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb} 
+\usepackage{epstopdf}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{paralist}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\newtheorem{mydef}{Definition}
+\theoremstyle{definition}
+
+\newtheorem{myprop}{Proposition}
+\theoremstyle{proposition}  
+
+\newtheorem{mycor}{Corollary}
+\theoremstyle{corollary} 
+
+\newtheorem{myl}{Lemma}
+\theoremstyle{lemma}
+
+\newtheorem{myt}{Theorem} 
+\theoremstyle{theorem} 
+
+\title{Finance Theory I}
+\author{Johnew Zhang}
+
+\begin{document} 
+
+% provides formulas for life contingencies 
+\def\angl#1{{% 
+\vbox{\hrule height .2pt 
+\kern 1pt 
+\hbox{$\scriptstyle {#1}\kern 1pt$}% 
+}\kern-.05pt \vrule width .2pt 
+}} 
+
+\def\tcelife#1{{\buildrel \circ \over e}_{#1}}
+
+\maketitle
+
+\hline
+
+\tableofcontents
+\addcontentsline 
+
+\newpage
+
+\section{Risk Aversion}
+When making decisions under certainty, the utility function representing preferences is unique only up to monotone transforms. However, for decisions under uncertainty, utility functions are unique up to monotone affine transforms: If two utility functions $u$ and $f$ represent the same preferences over all wealth gambles, then $u$ must be a monotone affine transform of $f$; that is, there exist a constant $a$ and a constant $b>0$ such that $u(w) = a+bf(w)$ for every $w$
+
+An investor is said to be weakly risk averse if $$u(w) \geq E[u(\tilde{w})]$$ for any random $\tilde{w}$ with mean $w$. An equivalent definition is that a risk-averse investor would prefer to avoid a fair bet, meaning that if $\tilde{\varepsilon}$ is a zero-mean random variable and $w$ is a constant, then
+$$u(w) \geq E[u(w+\tilde{\varepsilon})]$$
+ This is equivalent to Jensen's Inequality and diminishing marginal utility. 
+
+Absolute risk aversion is defined as $$\alpha(w) = -\frac{u''(w)}{u'(w)}$$ 
+Risk tolerance is $$\tau(w) = \frac{1}{\alpha(w)}$$
+Relative risk aversion is defined as $$\rho(w) = w\alpha(w)$$
+
+\subsection{Second Order Risk Aversion}
+Fix $w$ and let $\tilde{\varepsilon}$ be a bounded zero-mean random variables with unit variance. For $\sigma>0$, define $\pi(\sigma)$ by
+$$u(w- \pi(\sigma)) = E[u(w+\sigma\tilde{\varepsilon})]$$
+So, $w-\pi(\sigma)$ is the certainty equivalent of $w+\sigma\tilde{\varepsilon}$, and the variance of $w+\sigma \tilde{\varepsilon}$ is $\sigma^2$. For small $\sigma$, $$\pi(\sigma)\approx \frac{1}{2}\alpha(w)\sigma^2$$
+This means that $$\lim_{\sigma\to0}\frac{\pi(\sigma)}{\sigma^2} = \frac{\alpha(w)}{2}$$
+Thus, the amount an investor would pay to avoid a small gamble is approximately proportional to the variance of the gamble with proportionality coefficient equal to one-half of absolute risk aversion. The proof is using Taylor series expansion at 0. 
+
+Now, define $\pi(\sigma)$ by 
+$$u((1 - \pi(\sigma))w) = E[u((1+\sigma\tilde{\varepsilon})w)]$$
+So now $\pi$ is the fraction of wealth you would pay to avoid a gamble that is proportional to wealth. Similarly, we get
+$$\pi(\sigma) \approx \frac{1}{2}\rho(w)\sigma^2$$ 
+
+\subsubsection{CARA and CRRA Utility}
+\begin{mydef}
+A utility function has constant absolute risk aversion (CARA) if $\alpha(w)$ is constant. 
+
+A utility function has constant relative risk aversion (CRRA) if $\rho(w)$ is constant. 
+\end{mydef}
+
+Since utility function over the same preferences can be represented as the monotone affine transformation of one utility function, then we will discuss the basis utility function. 
+
+The negative exponential utility is CARA
+$$u(w) = -e^{-\alpha w}$$\footnote{If $\tilde{w} \sim N(\mu, \sigma^2)$, $E[e^{w}] = e^{\mu+\sigma^2/2}$} 
+with $\tau(w) =\frac{1}{\alpha}$
+The log and power utility function is CRRA
+$$u(w) = \begin{cases}
+u(w) = \log{w} & \rho = 1\\
+\frac{1}{1-\rho}w^{1-\rho} & \rho \neq 1 
+\end{cases}$$
+with $\tau(w) = \frac{w}{\rho}$ and $r(w) = \frac{\rho}{w}$
+
+\subsection{Linear Risk Tolerance}
+Linear tolerance is defined as $\tau(w) = A+Bw$ where $B$ is called the cautiousness parameter. Here, shifted CRRA also has linear tolerance
+$$u(w) = \begin{cases}
+\log{(w-\zeta)} & \rho = 1\\
+\frac{1}{1-\rho} (w-\zeta)^{1-\rho} & \rho \neq 1
+\end{cases}$$
+
+\subsection{Quadratic Utility}
+$$u(w) = -\frac{1}{2}(w - \zeta)^2$$
+It is monotone increasing for $w <\zeta$ ($\zeta$ is bliss point) and $\tau(w) = \zeta - w$. It implies mean-variance preferences:
+$$E[u(\tilde{w})]  \sim \zeta w  - \frac{1}{2}w-\frac{1}{2}Var(\tilde{w})$$
+
+\subsection{Decreasing Absolute Risk Aversion (DARA)}
+Suppose an investor's wealth increases, She would like to pay less to avoid a given gamble. This means $\alpha(w)$ is a decreasing function fo $w$. Quadratic utility and CRRA have such property. 
+
+\subsection{Additional Interest}
+\begin{description}
+\item[Law of Iterated Expectations] $E[E[w|x]] = E[w]$ 
+\item[Conditional Linearity] If $y$ is a function of $x$, then $E[yw|x]= yE[w|x]$
+\item[Jensen's Inequality] If $u$ is concave, then $E[u(w)|x] \leq u(E[w|x])$
+\item[Mean-independence] $E[w|x] = E[w]$. Independent $\implies$ mean-independent $\implies$ uncorrelated
+\end{description}
+
+\begin{myprop}
+If $u$ is concave, then
+$$E[u(\tilde{w})] \geq E[u(\tilde{w}+\tilde{\varepsilon})]$$
+Consequently, if $\tilde{w}$ and $\tilde{\varepsilon}$ are independent then $\tilde{w}$ is preferred to $\tilde{w}+\tilde{\varepsilon}$. However if they are uncorrelated, then $\tilde{w}+\tilde{\varepsilon}$ might be preferred to $\tilde{w}$, even though $\tilde{w}$ has the same mean and a smaller variance than $\tilde{w}+\tilde{\varepsilon}$. 
+\end{myprop}
+\begin{proof}
+Since $E[\tilde{w}+\tilde{\varepsilon}|\tilde{w}] = \tilde{w}$, then $u(\tilde{w}) \geq E[u(\tilde{w}+\tilde{\varepsilon})|\tilde{w}] = E[u(\tilde{w}+\tilde{\varepsilon})]$.
+\end{proof}
+
+\section{Portfolio Choice}
+\subsection{Notations}
+\begin{description}
+\item[Consumption] Single consumption good at each of two dates 0 and 1. Date- 0 wealth is $w$. 
+\item[Assets] 
+\begin{itemize}
+\item Asset $i= 1, \cdots, n$
+\item Date-0 prices $p_i$. We assume all prices are positive. 
+\item Date-1 payoffs $\tilde{x}_i$
+\end{itemize}
+\item[Returns]
+\begin{itemize}
+\item Returns $\tilde{R}_i = \tilde{x}_i/p_i$
+\item Rates of return $(\tilde{x}-p_i)/p_i = \tilde{R}_i - 1$
+\item If there is a risk-free asset then return is $R_f$ 
+\end{itemize}
+\item[Portfolios]
+\begin{itemize}
+\item $\theta_i = $ number of shares held in portfolio
+\item $\phi_i = \theta_ip_i =$ units of consumption good invested
+\item $\pi_i = \theta_i p_i/w=$ faction of wealth invested 
+\end{itemize}
+\end{description}
+
+\subsection{Portfolio Choice Problem}
+We assume short sales are allowed; no margin requirements. Here we take Date-0 consumption and investment as given and optimize over the portfolio. We can also optimize over Date-0 consumption and investment. Sometimes, other non-portfolio income $\tilde{y}$ at date-1 is allowed. 
+
+\begin{itemize}
+\item $$\max_{\theta_i} E\left[u\left(\sum_{i=1}^n \theta_i\tilde{x}_i\right)\right]\text{ subject to } \sum_{i=1}^n p_i\theta_i = w$$
+\item $$\max_{\phi_i} E\left[u\left(\sum_{i=1}^n \phi_i\tilde{R}_i\right)\right]\text{ subject to } \sum_{i=1}^n \phi_i= w$$
+\item $$\max_{\pi_i} E\left[u\left(w\sum_{i=1}^n \pi_i\tilde{R}_i\right)\right]\text{ subject to } \sum_{i=1}^n \pi_i = 1$$
+\end{itemize}
+
+We can use Lagrangean to solve the following
+$$E\left[u\left(\sum_{i=1}^n\theta_i \tilde{x}_i\right)\right] - \lambda\left(\sum_{i=1}^n p_i\theta_i - w\right)$$
+Based on the first order condition we can get
+$$E\left[u'\left(\sum_{i=1}^n\theta_i\tilde{x}_i\right)\tilde{R}_i\right]=\lambda$$
+Therefore $$E\left[u'\left(\sum_{i=1}^n\theta_i\tilde{x}_i\right)(\tilde{R}_i-\tilde{R}_j)\right]=0$$
+that is marginal utility at the optimal wealth is orthogonal to excess returns. Investing a little less in asset $j$ and a little more in asset $i$ cannot increase expected utility at the optimum. 
+
+\subsection{A Single Risky Asset}
+Let $\phi$ be amount invested in risky asset and $w_0 - \phi$ be the amount invested in risk-free asset. Therefore Date-1 wealth is
+$$\tilde{w} = (w_0 - \phi)R_f + \phi\tilde{R} = w_0 + \phi(\tilde{R}-R_f)$$ 
+From first order condition, we get
+$$E[u'(\tilde{w})(\tilde{R}-R_f)] =0$$
+To show when $E[\tilde{R}]>R_f$, $\phi^* > 0$, we will use the second-order risk aversion. We can differentiate the FOC to show that the risky good is a normal good if the investor has decreasing absolute risk aversion. 
+
+\subsection{CARA-Normal with Single Risky Asset}
+$$\phi^* = \frac{\mu - R_f}{\alpha \sigma^2}$$
+$$\pi^* = \frac{\mu -R_f}{(\alpha w_0)\sigma^2}$$ 
+
+\subsection{Multiple Risky Assets}
+Define $$\Sigma = E[(\tilde{R}- \mu)(\tilde{R}- \mu)']$$
+Here $\Sigma$ has to be positive definite. It means there is no risk-free portfolio of risky assets. If there is a risk-free portfolio of risky assets, one risky asset is a linear combination of the others. Then it can be eliminated. It does not change investment opportunities. By eliminating redundant assets, we can assume $\Sigma$ is non-singular and positive definite.  
+
+The optimum for CARA-Normal with multiple risky assets is
+$$\phi^* = \frac{1}{\alpha}\Sigma^{-1}(\mu-R_f\iota)$$
+
+\subsection{Linear Risk Tolerance}
+Assume no labor income. Assume $LRT$, $\tau(w) = A+Bw$. Assume a risk-free asset exists. The optimal investment in each risky asset is $$\phi^* = \xi_i[A+BR_fw_0]$$
+where $\xi_i$ does not depend on $A$ or on $w_0$. 
+
+\subsection{Two-Fund Separation with LRT Utility}
+Suppose all investors have LRT utility with the same cautiousness parameter. Then the optimal investment in risky asset $i$ is
+$$\phi_{hi}^* = \xi_i[A_h+BR_fw_{h0}]$$ in risky asset $i$. In other words, the fraction in asset $i$ is
+$$\pi_{hi} = \frac{\xi_i}{\sum_{i=1}^n \xi_i}$$
+
+Now suppose, Date-0 and Date-1 consumption: utility function $v(c_0, c_1)$. Assume time-additive utility 
+$$v(c_0,c_1) = u(c_0) +\delta u(c_1)$$
+Then our investment problem is 
+$$\max_{\phi_i} u(c_0)+\delta E\left[u\left(\sum_{i=1}^n \phi_i \tilde{R}_i\right)\right] \text{ subject to } c_0 +\sum_{i=1}^n \phi_i = w$$
+By first order condition, we get
+$$\delta E\left[u'\left(\sum_{i=1}^n \phi_i\tilde{R}_i\right)\tilde{R}_i\right] = \lambda$$
+$$\delta E\left[\frac{\delta u'\left(\sum_{i=1}^n \phi_i\tilde{R}_i\right)}{u'(c_0)}\tilde{R}_i\right] = 1$$ 
+
+\section{Stochastic Discount Factor}
+The value of an asset depends on future cash flows. We discount future cash flows because of the time value of money and because of risk. If investors were risk neutral, an asset price would be $p= E[\tilde{x}]/R_f$. Generally, asset prices can be defined as $p = E[\tilde{m}\tilde{x}]$, where $\tilde{m}$ is a stochastic discount factor. If $m_j \overset{def}{=} \tilde{m}(w_j)$ and $x_j \overset{def}{=}\tilde{x}(w_j)$, then we have
+$$p = \sum_{j=1}^k m_jx_jprob_j$$ 
+
+\subsection{Arrow Securities}
+If there are finitely many states of world $w_j$ for $j = 1, \cdots, k$, then we can get $q_j = m_jprob_j$ to obtain
+$$p = \sum_{j=1}^k m_j x_j prob_j = \sum_{j=1}^k q_j x_j$$
+
+\begin{mydef}
+An Arrow security is an asset that pays a unit of consumption in a particular state and zero in all other states. $q_j$ is the price of the Arrow security. 
+\end{mydef}
+
+With finitely many states, any security is a portfolio of Arrow securities. It contains $x_j$ units of the $j$-th Arrow security. the price of any security is the value of the portfolio of Arrow securities-the sum over $j$ of the number of units times the price of the Arrow security. 
+
+\subsection{Alternate Representations}
+Suppose $\tilde{m}$ is an SDF, meaning
+$$(\forall \text{ assets i) } p_i = E[\tilde{m}\tilde{x}_i]$$
+If $p_i \neq 0$, then $$E[\tilde{m}\tilde{R}_i] = 1$$
+If also $p_j \neq 0$, then
+$$E[\tilde{m}(\tilde{R}_i- \tilde{R}_j)] =0$$ 
+
+\subsection{Marginal Utility Defines an SDF}
+Based on the FOC
+$$(\forall i) E[u'(\tilde{w})\tilde{x}_i] = \lambda p_i$$
+So, $u'(\tilde{w})/\lambda$ is an SDF. With time-additive utility, the MRS
+$$\frac{\delta u'(\tilde{c}_1)}{u'(c_0)}$$ is an SDF. 
+
+\subsection{Risk Premia}
+Since we know that $$1 = E[\tilde{m}\tilde{R}] = cov(\tilde{m}, \tilde{R})+ E[\tilde{m}]E[\tilde{R}]$$, then
+$$E[\tilde{R}] = \frac{1}{E[\tilde{m}]} - \frac{1}{E[\tilde{m}]}cov(\tilde{m}, \tilde{R})$$ 
+Therefore, expected asset returns depend on covariances with an SDF. If there is a risk-free asset, substituting $\tilde{R}=R_f$ gives $R_f = 1/E[\tilde{m}]$. Therefore, 
+\begin{equation}\label{eq:1}
+E[\tilde{R}] - R_f = -R_f cov(\tilde{m}, \tilde{R})
+\end{equation}
+We can also rewrite this as 
+$$p = E[\tilde{m}\tilde{x}] = \frac{E[\tilde{x}] + R_f cov(\tilde{m}, \tilde{x})}{R_f}$$ so we can adjust the expected payoff for risk and then discount at the risk-free rate. 
+
+From equation \eqref{eq:1}, we can get
+$$p = \frac{E[\tilde{x}]}{R_f(1- cov(\tilde{m}, \tilde{R}))}$$
+so we can discount the expected payoff at a risk-adjusted rate. 
+
+\subsection{Arbitrage and Existence of SDFs}
+\begin{align*}
+\text{Existence of Strictly Positive SDF} &\iff \text{No Arbitrage Opportunity}\\
+&\implies \text{Law of One Price}\\
+&\iff \text{Existence of SDF}  
+\end{align*}
+
+\subsubsection{Law of One Price}
+Include the risk-free asset (if it exists) as one of the $n$ assets. A random variable $\tilde{z}$ is a marketed payoff if it is the payoff of some portfolio of assets:
+$$\tilde{z} = \sum_{i=1}^n \theta_i\tilde{x}_i$$ 
+where $\theta_i$ represents portfolio.
+The LOP holds if each marketed payoff has a unique cost:
+$$(\forall \theta, \hat{\theta}\in\mathbb{R}^n\text{) } \sum_{i=1}^n \theta_i\tilde{x}_i = \sum_{i=1}^n \hat{\theta}_i \tilde{x}_i \implies p'\theta = p'\hat{\theta}$$
+Equivalently, 
+$$\sum_{i=1}^n \theta_i \tilde{x}_i = 0 \implies \sum_{i=1}^n \theta_ip_i = 0$$
+
+\subsubsection{Arbitrage Opportunities}
+An arbitrage opportunity is a portfolio $\theta$ satisfying
+\begin{itemize}
+\item $p'\theta \leq 0$
+\item $\sum_{i=1}^n \theta_i \tilde{x}_i \geq 0$ with probability 1 
+\item either $p'\theta < 0$ or $\sum_{i=1}^n \theta_i\tilde{x}_i > 0$ with positive probability 
+\end{itemize}
+
+\subsection{Finite State Model}
+$n$ assets and $k$ states. Let $X = n\times k$ matrix of asset payoffs. Intuitively, there should be more states than assets. Let $p$ be the $n$-vector of asset prices. A state price vector is a $k$-vector q such that $Xq = p$. An SDF is a vector  of state prices divided by probabilities. LOP implies a state price vector exists. NAO implies a strictly positive state price vector exists. 
+
+\subsection{Complete Markets}
+The market is complete if every random variable is a marketed payoff: 
+$$(\forall \tilde{w}\text{) } (\exists \theta\text{) } \sum_{i=1}^n \theta_i \tilde{x}_i = \tilde{w}$$
+If there are infinitely many states of the world and only finitely many assets, then the market cannot be complete. Also, moral hazard and adverse selection limit markets. 
+
+Now let's assume we have finite states. Then this implies the market is complete if
+$$(\forall w \in \mathbb{R}^k\text{) }(\exists \theta \in \mathbb{R}^n\text{) } X'\theta = w$$
+This means that the linear span of the $n$ rows of $X$ is $ \mathbb{R}^k$. Equivalently, the rank of $X$ is $k$. Hence $n \geq k$. If the market is complete and the LOP holds, then there is a unique state price vector $q$ such that
+$$q = (X'X)^{-1}X'p$$
+When $n = k$, then $q = X^{-1}p$. 
+
+\subsection{Risk Neutral Probability}
+Given an SDF $\tilde{m}$, define
+$$\mathbb{Q}(A) = \frac{E[\tilde{m}1_A]}{E[\tilde{m}]} = R_fE[\tilde{m}1_A]$$
+where $A \subseteq \Omega$. Then, $\mathbb{Q}$ is a probability. Let $E^*$ denote expectation with respect to $\mathbb{Q}$.
+$$(\forall A\text{) }E^*[1_A] = R_fE[\tilde{m}1_A] \implies (\forall \tilde{x}\text{) } E^*[\tilde{x}] = R_fE[\tilde{m}\tilde{x}]$$
+Then, relative to $\mathbb{Q}$, prices are expected payoffs discounted at the risk-free rate and expected returns equal the risk-free return
+$$p= E[\tilde{m}\tilde{x}] = \frac{E^*[\tilde{x}]}{R_f} \implies E^*[\tilde{R}] = \frac{E^*[\tilde{x}]}{p} = R_f$$
+
+\subsection{Orthogonal Projections}
+Assume all assets payoffs have finite variances and the LOP holds. Then there is an SDF with finite variance. We will project all SDFs onto the span of the assets. Let $\tilde{X}$ denote the $n\times k$ matrix with $\tilde{x}_i$ as its i-th row. The projection is spanned by $\tilde{X}$, meaning, for some $\theta$, 
+$$\tilde{m}_p = \sum_{i=1}^n \theta_i \tilde{x}_i = \tilde{X}'\theta$$
+The orthogonal projection is defined by the residual $\tilde{\varepsilon} = \tilde{m} - \tilde{m}_p$ being orthogonal to the $\tilde{x}_i$, meaning $E[\tilde{\varepsilon}\tilde{x}_i] = 0$ for all assets $i$. Equivalently, $E[\tilde{X}(\tilde{m} - \tilde{X}'\theta)] = 0$. Hence it is easy to get
+$$\tilde{m}_p=p'E[\tilde{X}\tilde{X}']^{-1}\tilde{X}$$
+
+\subsubsection{Orthogonal Projections Including a Constant}
+Stacking the constants into an $n$-dimensional vector $A$, the projection of $\tilde{Y}$ is $A + B\tilde{X}$, where $B$ is an $n \times k$ matrix and 
+$$\tilde{Y} = A +B\tilde{X} + \tilde{\varepsilon}$$
+where $E[\tilde{\varepsilon}] =0$ and $E[\tilde{\varepsilon}\tilde{X}'] = 0$. 
+
+The projections of the $\tilde{y}_i$ onto the span of a constant the the $\tilde{x}_j$ are the elements of the vector. 
+$$\bar{Y} + Cov(\tilde{Y}, \tilde{X})Cov(\tilde{X})^{-1}[\tilde{X} - \bar{X}]$$
+
+\subsection{Hansen-Jagannathan bound with a Risk-Free Asset}
+$$\frac{stdev(\tilde{m})}{E[\tilde{m}]} \geq \frac{stdev(\tilde{m}_p)}{E[\tilde{m}_p]} \geq \frac{|E[\tilde{R}] - R_f|}{stdev(\tilde{R})}$$
+The right-hand side is the absolute value of the Sharpe ratio of $\tilde{R}$. 
+
+\section{Equilibrium and Efficiency}
+\subsection{Pareto Optimum}
+A Pareto optimum is an allocation of end-of-period wealth such that it is impossible to make anyone better off (in expected utility term) without making at least one other person worse off. A non-Pareto allocation implies the feasibility of welfare-improving trade. A Pareto optimum solves a social planner's problem: for any Pareto optimum $(\tilde{w}_1^*, \cdots, \tilde{w}_H^*)$, there exist weights $\lambda_1, \cdots, \lambda_H$ such that $(\tilde{w}_1^*, \cdots, \tilde{w}_H^*)$ solves
+$$\max_{\tilde{w}_i} \sum_{h=1}^H \lambda_hE[u_h(\tilde{w}_h)] \text{ subject to } \sum_{h=1}^H \tilde{w}_h = \tilde{w}_m$$
+The resource constraint is pointwise, so we can solve the maximization problem pointwise. In other words, 
+$$\max_{\tilde{w}_h(\omega)} \sum_{h=1}^H \lambda_hu_h(\tilde{w}_h(\omega))\text{ subject to } \sum_{h=1}^H \tilde{w}_h(\omega) = \tilde{w}_m(\omega)$$
+From the FOC, we know, for all $h$, 
+$$\lambda_hu'_h(\tilde{w}_h(\omega)) = \tilde{\eta}(\omega)$$ 
+
+\subsection{Sharing Rules}
+At a Pareto optimum, there is equality of MRS's: for all individuals $h$ and $l$ and states $i$ and $j$,
+$$\frac{u'(\tilde{w}_h(\omega_i))}{u'(\tilde{w}_h(\omega_j))} = \frac{u'(\tilde{w}_l(\omega_i))}{u'(\tilde{w}_l(\omega_j))}$$
+If the market wealth is higher in state $i$ than in state $j$, then at any Pareto optimum all investors have higher wealth in state $i$ than in state $j$. This implies each investor's wealth is a function of market wealth. This function is called a sharing rule. 
+
+\subsection{Linear Risk Tolerance}
+Assume $\tau_h(w) = A_h + Bw$ with the same cautiousness parameter $B\geq 0$ for all individuals. Note $B > 0$ implies DARA. In this case, Pareto optimal sharing rules are affine:
+$$\tilde{w}_j = a_h + b_h \tilde{w}_m$$ 
+with $\sum_{h=1}^H a_h = 0$ and $\sum_{h=1}^H b_h = 1$. 
+
+\subsection{Competitive Equilibrium}
+All investors take security prices as given and choose optimal portfolios
+\begin{description}
+\item[Model 1] Investors own assets at date 0; pries of assets determine wealth at date 0; all wealth is invested in assets. Market clear: demands for assets equal supplies
+\item[Model 2] Investors have consumption good endowments and asset endowments at date 0; choose date-0 consumption and portfolios; date-0 consumption and asset markets clear. 
+\end{description}
+
+Assume finite state model with complete markets. Arrow-Debreu model: investors choose consumption in each state with prices $q$. Securities market equilibria with complete markets are Pareto optimal. In addition, under markets with LRT utility, any competitive equilibrium is Pareto optimal. 
+
+\section{Mean Variance}
+In the following notes, we will use
+\begin{itemize}
+\item $A = \mu'\Sigma^{-1}\mu$
+\item $B = \mu'\Sigma^{-1}\iota$
+\item $C = \iota'\Sigma^{-1}\iota$
+\end{itemize}
+
+\subsection{Global Minimum Variance Portfolio}
+The GMV portfolio of risky assets is the solution to
+$$\min_{\pi} \frac{1}{2}\pi'\Sigma \pi \text{ subject to } \iota'\pi = 1$$
+By solving this we can get the GMV portfolio 
+$$\pi_{gmv} = \frac{1}{\iota'\Sigma^{-1}\iota} \Sigma^{-1}\iota = \frac{B}{C}$$ 
+
+\subsection{Mean-Variance Frontier of Risky Assets}
+Assume there is no risk-free asset. A frontier portfolio $\pi$ is a portfolio that has minimum risk for a given expected return $\mu_{targ}$. Hence we get
+$$\pi = \delta\Sigma^{-1}\mu + \gamma \Sigma^{-1}\iota$$ and solution depends on $\mu_{targ}$
+
+if we add all the investors with Homogeneous belief, we can get the wealth-weighted $\pi$'s to get the market portfolio. Hence, the market portfolio is on the frontier. 
+
+\subsection{Two Fund Spanning}
+Any two frontier portfolios $\pi_a$ and $\pi_b$ span the entire frontier: Any other frontier portfolio $\pi_c$ satisfies 
+$$\pi_c = \lambda \pi_a + (1- \lambda) \pi_b$$
+for some $\lambda$. 
+
+\subsection{Mean-Variance Frontier with a Risk-Free Asset}
+When there is a risk-free asset, a frontier portfolio solves the following for some $\mu_{targ}$:
+$$\min \frac{1}{2}\pi'\Sigma\pi  \text{ subject to } R_f + (\mu - R_f\iota)'\pi = \mu_{targ}$$
+Based on FOC, when $B/C \neq R_f$, we can define
+$$\pi_{tang} = \frac{1}{\iota'\Sigma^{-1}(\mu- R_f\iota)}\Sigma^{-1}(\mu - R_f \iota)$$
+
+Two fund spanning tells us with or without a risk-free asset, any two frontier portfolios span the frontier. With a risk-free asset and $B/C \neq R_f$, the risk-free asset and tangency portfolio span the frontier. 
+
+\subsection{Covariance and Risk Premia}
+The i-th element of the vector $\Sigma \pi$ is 
+$$\sum_{j=1}^n \sigma_{ij}\pi_j = \sum_{j=1}^n \pi_j cov(\tilde{R}_j, \tilde{R}_i) = cov\left(\sum_{j=1}^n \pi_j\tilde{R}_j, \tilde{R}_i\right)$$
+This is the covariance of the portfolio return with $\tilde{R}_i$. Thus, $\Sigma \pi$ is the vector of covariances of the portfolio $\pi$ with the n asset returns. The FOC for a frontier portfolio is $\mu - R_f\iota = \frac{1}{\delta} \Sigma \pi$. Thus the risk premium of each asset is proportional to the covariance of the asset return with the portfolio $\pi$. A frontier portfolio return is thus similar to an SDF. 
+
+\section{Factor Models}
+\subsection{Basic Factor Pricing Model}
+Let $\tilde{m}$ be an SDF. For every return $\tilde{R}$, 
+$$E[\tilde{R}] = \frac{1}{E[\tilde{m}]} - \frac{1}{E[\tilde{m}]}cov(\tilde{m}, \tilde{R})$$
+Consider any return $\tilde{R}^*$ that is uncorrelated with $\tilde{m}$. We have
+$$E[\tilde{R}^*] = \frac{1}{E[\tilde{m}]}$$
+Define $R_z = E[\tilde{R}^*]$. $R_z$ is called the zero-beta return. If there is a risk-free asset, then $R_z = R_f$, because the risk-free return is uncorrelated with everything. 
+
+For all returns $\tilde{R}$, 
+$$E[\tilde{R}] = R_z - R_z cov(\tilde{m}, \tilde{R}) \implies E[\tilde{R}] - R_z = \frac{cov(\tilde{m}, \tilde{R})}{var(\tilde{m})} \lambda$$
+where $\lambda = -R_zvar(\tilde{m})$ and it is called the price of risk. Risk is measured by beta $cov(\tilde{m}, \tilde{R})/var(\tilde{m})$. The risk premium of an asset-using the zero-beta return as a proxy for the risk-free return - is its risk (beta) multiplied by the price of risk. 
+
+\subsection{General Factor Pricing Model}
+$\tilde{X} = (\tilde{x}_1, \cdots, \tilde{x}_k)'$ is a vector of pricing factors if there exists a constant $R_z$ and a $k$-vector $\lambda$, such that all asset returns $\tilde{R}$ satisfy 
+$$E[\tilde{R}] - R_z = \lambda'Cov(\tilde{X})^{-1}Cov(\tilde{X}, \tilde{R})$$.
+
+As a special case, a single random variable $\tilde{x}$ is a pricing factor if there exist constants $R_z$ and $\lambda$ such that
+$$E[\tilde{R}] - R_z = \frac{cov(\tilde{x}, \tilde{R})}{var(\tilde{x})} \lambda$$
+
+ It is good to note any SDF is a pricing factor. 
+ 
+ \subsection{Capital Asset Pricing Model}
+ The CAPM states that the market return is a pricing factor. The price of risk is therefore the market risk premium. The market return is the value-weighted average of all asset returns. The CAPM is equivalent to the market return being on the MV frontier, which is true if all investors have mean-variance preferences and no random labor income. We might be able to include random labor income as part of the market return. 
+ 
+ 
+ \subsection{Statistical Factor Models} 
+ A factor pricing model explains risk premia in terms of covariance or betas with respect to a set of factors. A statistical factor model explains variances and covariances in terms of covariance with respect to a set of factors. The residual in the projection of a return $\tilde{R}$ onto the span of a constant and $\tilde{X} = (\tilde{x}_1, \cdots, \tilde{x}_k)'$ is 
+ $$\tilde{\varepsilon} = \tilde{R} - \bar{R} + Cov(\tilde{X}, \tilde{R})'Cov(\tilde{X})^{-1}[\tilde{X} - \bar{X}]$$
+ We say that returns satisfy a statistical factor model with factors $\tilde{X}$ if the residuals of each pair of returns are uncorrelated. The residuals are called idiosyncratic risks. 
+
+For any return $\tilde{R}_i$, let $\beta_i$ denote the column vector of multiple regression betas:
+$$\beta_i = Cov(\tilde{X})^{-1}Cov(\tilde{X}, \tilde{R}_i)$$
+Then we get $\tilde{R}_i = \bar{R}_i + \beta'_i[\tilde{X} - \bar{X}] + \tilde{\varepsilon}_i$ Because the $\tilde{\varepsilon}$'s are mutually uncorrelated so $$Cov(\tilde{R}_i, \tilde{R}_j) = Cov(\beta'_i[\tilde{X} - \bar{X}] + \tilde{\varepsilon}_i, \beta'_j[\tilde{X} -\bar{X}] + \tilde{\varepsilon}_i] = \beta'_iCov(X)\beta_j$$
+Thus the covariance between any two returns depends only on their exposures to the common factors. Those exposures called systematic risks. 
+
+\subsection{Arbitrage Pricing Theory}
+\begin{myt}
+Assume 
+\[
+\tilde{r}_i = a_i + \sum_{j=1}^K b_{ij}\tilde{f}_j + \tilde{\varepsilon}_i, i=1, \cdots, n
+\] 
+where $E[\tilde{\varepsilon}_i] = 0$, $E[\tilde{f}_j] = 0$, $Var(\tilde{\varepsilon}_i) = \sigma^2$ and $Cov(\tilde{\varepsilon}_i, \tilde{\varepsilon}_j) = 0$.
+
+Arbitrage pricing theory (APT) says that $a_i \approx \lambda_{0} + \sum_{j=1}^k \lambda_{j} b_{ij}$ when the number of assets is arbitrarily large and no arbitrage opportunity exists.
+
+\end{myt}
+
+\begin{proof}
+We will split the proof into two cases. At first, we will explore the 1-factor model and then we will provide a general proof of the k-factor model.  First of all, we can prove APT contra-positively, that is, if there is no asymptotic arbitrage, then it means there exists $A$ such that 
+\[
+\sum_i (a_i - \lambda_0 - \sum_{j=1}^k}\lambda_jb_{ij})^2 \leq A
+\]
+Then, to prove the APT statement above is equivalent to show that there is an arbitrage opportunity when $$a = \lambda_0\iota +\lambda b + \Delta$$
+for some $\Delta$ such that $\lim_{n\to\infty} \Delta'\Delta \to \infty$
+\begin{description}
+\item[1-Factor] Consider $\tilde{r}_i = a_i + b_{i1}\tilde{f}_1 + \tilde{\varepsilon}_i$. We need to construct an arbitrage portfolio, so the following condition is necessary
+\begin{enumerate}[(i)]
+\item $(w^n)'\iota = 0$ (costless)
+\item $(w^n)'b_1^n = 0$ because we can write payoff as
+\[
+(w^n)'\tilde{r} = (w^n)'a + (w^n)'b_1\tilde{f}_1 + (w^n)'\tilde{\varepsilon} = (w^n)'a+ (w^n)'\tilde{\varepsilon}
+\]
+\end{enumerate}
+Then we can get the expected payoff and variance of the payoff
+\begin{enumerate}[(i)]
+\item $E[(w^n)'\tilde{r}] = (w^n)'a$
+\item $Var((w^n)'\tilde{r}) = \sigma^2w^n'Iw^n = \sigma^2\sum_{i=1}^n (w^n_i)^2$
+\end{enumerate}
+We need to construct $w^n$ such that it is the weight for an arbitrage portfolio. Since
+$$a = \lambda_0\iota +\lambda_1b_1^n +\Delta^n$$
+where $\sum_i (\Delta_i^n)^2 \to \infty$ as $n \to \infty$ then $w^n$ can be written as $Q^n\Delta^n$ since it is proportional to $\Delta^n$. 
+
+Let's pick $Q^n = ((\Delta^n)'\Delta^n)^{p}$ such that $p\in(-1, -\frac{1}{2})$. 
+
+Therefore, we can the expected payoff and variance of the payoff becomes the following
+\begin{enumerate}[(i)]
+\item $E[(w^n)'\tilde{r}] = (w^n)'\Delta^n = Q^n(\Delta^n)'\Delta^n=((\Delta^n)'\Delta^n)^{p+1} \to \infty$ since $p+1 > 0$
+\item $Var((w^n)'\tilde{r}) = (Q^n \sigma)^2(\Delta^n)'\Delta^n = \sigma^2((\Delta^n)'\Delta^n)^{2p+1} \to 0$ since $2p + 1 < 0$
+\end{enumerate}
+
+This is an arbitrage. 
+
+\item[k-Factor] In this case, we will see the same construction for $w^n$ but updating its condition on the factor parameters to $(w^n)'b^n_{i} = 0, i=1, \cdots, k$. The argument remains the same. 
+\end{description}
+\end{proof} 
+
+\section{Rational Expectations Equilibria}
+Investors have common priors but heterogeneous information. Different information causes investors to have different beliefs. Learn from security prices but the information of other investors. Revise their beliefs in response. 
+
+If all information is public, beliefs need not be co concordant to preclude trade from an initial position which was ex ante Pareto optimal relative to $\theta$ - trades. For concave, differentiable utility functions, $x$ is publicly announced, further trade is precluded if and only if:
+$$\frac{p_1(x|\theta)}{p_1(x|\theta')} = \cdots = \frac{p_n(x|\theta)}{p_n(x|\theta')}, \forall x, \theta, \theta'$$
+
+\subsection{Normal-Normal Updating}
+Variable $\tilde{x}$ to be estimated, and signal $\tilde{s}$ are joint normally distributed. Because of normality: 
+\begin{itemize}
+\item Expectation of $\tilde{x}$ conditional on $\tilde{s}$ is the orthogonal projection of $\tilde{x}$ on the space spanned by $\tilde{s}$ and a constant.
+\item Projection is:
+\begin{align*}
+E[\tilde{x}|\tilde{s}] &= E[\tilde{x}]  + \beta(\tilde{s} - E[\tilde{s}]) \\
+\beta&=\frac{cov(\tilde{x}, \tilde{s})}{var(\tilde{s})}
+\end{align*}
+\item Conditional on $\tilde{s}, \tilde{x}$ is normally distributed with mean above. 
+\end{itemize}
+Normality means residual $\varepsilon$ in the projection is independent of $\tilde{s}$, hence mean independent of $\tilde{s}$. Thus $E[\tilde{x}|\tilde{s}]$ equals the projection.
+
+Variance of $\tilde{x}$ conditional on $\tilde{s} = $ variance of residual. Let's write
+$$\tilde{x} = E[\tilde{x}] + \beta(\tilde{s} - E[\tilde{s}]) + \varepsilon$$
+$$var(\tilde{x}) = \beta^2var(\tilde{s}) + var(\varepsilon)$$
+where $var(\varepsilon) = [1 -corr(\tilde{x}, \tilde{s})^2]var(\tilde{x})$ 
+
+That is squared correlation is fraction of the variance of $ \tilde{x}$ attributable to correlation with $\tilde{s}$: $R^2$ of the projection of $\tilde{x}$ on $\tilde{s}$. 
+
+\subsection{Truth-Plus-Noise Signals}
+Consider the following
+$$\tilde{s} = \tilde{x} + \varepsilon$$
+
+Then projection of $\tilde{s}$ on $\tilde{x}$ is
+$$\tilde{s} = \alpha + \frac{cov(\tilde{x}, \tilde{s})}{var(\tilde{x})} \tilde{x} + \tilde{\xi}$$
+Then it is easy to get
+$$\beta =  \frac{cov(\tilde{x}, \tilde{s})}{var(\tilde{x})} = \frac{var(\tilde{x})}{var(\tilde{s}) + var(\varepsilon)}$$
+Now let's define the precision as the reciprocal of variance. Then
+$$\frac{1}{var(\tilde{x}| \tilde{s})} = \frac{1}{var(\tilde{x})} + \frac{1}{var(\varepsilon)}$$
+Precision of the estimate of $\tilde{x}$ increases when the signal is observed. 
+
+\subsection{Sequential Projections}
+Signals are truth-plus-noise $\tilde{s}_i = \tilde{x} + \varepsilon_i$ with independent noise terms $\varepsilon_i$. Then we know the following
+$$E[\tilde{x}|\tilde{s}_1, \cdots, \tilde{s}_m] = (1- \beta_m)E[\tilde{x}|\tilde{s}_1, \cdots, \tilde{s}_{m-1}] + \beta_m\tilde{s}_m$$ 
+for $m \leq n$, where
+$$\beta_m = \frac{cov(\tilde{x}, \tilde{s}_m| \tilde{s}_1, \cdots, \tilde{s}_{m-1})}{var(\tilde{s}_m|\tilde{s}_1, \cdots, \tilde{s}_{m-1})} = \frac{var(\tilde{x}, \tilde{s}_m| \tilde{s}_1, \cdots, \tilde{s}_{m-1})}{var(\tilde{x}|\tilde{s}_1, \cdots, \tilde{s}_{m-1})+var(\varepsilon_m}$$
+Change in the conditional expectation when $\tilde{s}_m$ is observed is proportional to the innovation in the signal. 
+$$\tilde{s}_m - E[\tilde{s}_m|\tilde{s}_1, \cdots, \tilde{s}_{m-1}] = E[\tilde{x}|\tilde{s}_1, \cdots, \tilde{s}_{m-1}]$$
+Thus precision of the estimate of $\tilde{x}$ increases by the precision of the signal noise term each time an additional signal is observed. 
+\subsection{Fully Revealing Equilibria}
+Single-period market with risk-free asset in zero net supply. Investors have CARA utility. $\tilde{x}$ vector of risky asset payoffs; $\tilde{s} = (\tilde{s}_1, \cdots, \tilde{s}_H)$ vector of signals observed by investors before trade. $(\tilde{x}, \tilde{s})$ 
+has a joint normal distribution. 
+
+To find equilibrium price, consider an artificial economy where each investor observes the entire vector $\tilde{s}$. In equilibrium of artificial economy,  equilibrium prices reveal all that investors need to know about $\tilde{s}$. Prices in actual economy with rational expectations produce the same demands as in the artificial economy, and are therefore equilibrium prices of the actual economy. 
+
+Let $\mu(\tilde{s}) = E[\tilde{x}|\tilde{s}]$. Then we know the risk-free return $R_f(\tilde{s})$ and equilibrium price vector $p(\tilde{s})$ are:
+$$R_f(\tilde{s}) = \frac{1}{\delta} \exp\left(\alpha[\bar{\theta}'\mu(\tilde{s}) - \bar{c}_0] - \frac{1}{2}\alpha^2\bar{\theta}'\Sigma \bar{\theta}\right)$$
+$$p(\tilde{s}) = \frac{1}{R_f(\tilde{s})}[\mu(\tilde{s}) - \alpha \Sigma\bar{\theta}]$$
+
+For equilibrium prices, investors can compute $\mu(\tilde{s})$
+$$\mu(\tilde{s}) = \alpha \Sigma \bar{\theta} + R_f(\tilde{s}) p(\tilde{s})$$
+Therefore, each investor will observe equilibrium prices
+$$\frac{1}{\alpha_h}\Sigma^{-1}[\mu(\tilde{s}) - R_f(\tilde{s})p(\tilde{s})]$$
+
+\subsection{Grossman-Stiglitz Paradox}
+No investor $h$ needs to use private signal to compute $\mu(\tilde{s})$ because $\mu(\tilde{s})$ is fully revealed by equilibrium prices. No investor benefits from private information in equilibrium. 
+
+\end{document}
